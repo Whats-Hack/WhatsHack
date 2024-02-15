@@ -6,6 +6,7 @@
       "token": "some token",
       "lastConnection": "Date",
       "friends": [],
+      "chats": [0],
       "email": "example@text.com",
       "avatar": "url",
       "username": "chyVacheck",
@@ -13,7 +14,8 @@
       "firstName": "example firstName",
       "lastName": "example lastName",
       "birthday": "Date",
-      "city": "example city"
+      "city": "example city",
+      "isActive": true
     },
     {
       "id": 1,
@@ -21,6 +23,7 @@
       "token": "some token",
       "lastConnection": "Date",
       "friends": [],
+      "chats": [0],
       "email": "example@text.com",
       "avatar": "url",
       "username": "Huguiz",
@@ -28,7 +31,24 @@
       "firstName": "example firstName",
       "lastName": "example lastName",
       "birthday": "Date",
-      "city": "example city"
+      "city": "example city",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "creationDate": "2024-02-15T15:15:24.947Z",
+      "lastConnection": "2024-02-15T15:15:24.947Z",
+      "friends": [],
+      "chats": [],
+      "email": "",
+      "avatar": "",
+      "username": "chyVacheck_1",
+      "password": "123",
+      "firstName": "",
+      "lastName": "",
+      "birthday": "",
+      "city": "",
+      "isActive": true
     }
   ],
   "chats": [
