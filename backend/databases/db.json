@@ -2,9 +2,8 @@
   "users": [
     {
       "id": 0,
-      "creationDate": "Date",
-      "token": "some token",
-      "lastConnection": "Date",
+      "creationDate": "2000-01-01T00:00:00.000Z",
+      "lastConnection": "2000-01-01T00:00:00.000Z",
       "friends": [],
       "chats": [0],
       "email": "example@text.com",
@@ -13,15 +12,14 @@
       "password": "example pass",
       "firstName": "example firstName",
       "lastName": "example lastName",
-      "birthday": "Date",
+      "birthday": "2002-12-19T00:00:00.000Z",
       "city": "example city",
       "isActive": true
     },
     {
       "id": 1,
-      "creationDate": "Date",
-      "token": "some token",
-      "lastConnection": "Date",
+      "creationDate": "2000-01-01T00:00:00.000Z",
+      "lastConnection": "2000-01-01T00:00:00.000Z",
       "friends": [],
       "chats": [0],
       "email": "example@text.com",
@@ -30,24 +28,8 @@
       "password": "example pass",
       "firstName": "example firstName",
       "lastName": "example lastName",
-      "birthday": "Date",
+      "birthday": null,
       "city": "example city",
-      "isActive": true
-    },
-    {
-      "id": 2,
-      "creationDate": "2024-02-15T15:15:24.947Z",
-      "lastConnection": "2024-02-15T15:15:24.947Z",
-      "friends": [],
-      "chats": [],
-      "email": "",
-      "avatar": "",
-      "username": "chyVacheck_1",
-      "password": "123",
-      "firstName": "",
-      "lastName": "",
-      "birthday": "",
-      "city": "",
       "isActive": true
     }
   ],
