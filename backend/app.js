@@ -39,11 +39,11 @@ function authenticateToken(req, res, next) {
 }
 
 function login(req, res, next) {
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
 
   for (let i = 0; i < db.users.length; i++) {
     const user = db.users[i];
-    if (user.username === userName) {
+    if (user.username === username) {
       if (user.password === password) {
         const token = jwt.sign(
           {
