@@ -235,3 +235,55 @@
     }
   }
   ```
+
+- domain/api/chats/:chatId _POST_
+
+  params
+
+  ```json
+    chatId: 0 // id of chat
+  ```
+
+  body
+
+  ```json
+  {
+    "message": "example text" // can't be empty
+  }
+  ```
+
+  no answer body
+
+- domain/api/chats/:chatId/:messageId _PATCH_
+
+  params
+
+  ```json
+    chatId: 0 // id of chat
+    messageId: 0 // id of message
+  ```
+
+  body
+
+  ```json
+  {
+    "message": "example text" // can't be empty
+  }
+  ```
+
+  no answer body
+
+#### soon
+
+- domain/api/chats/:chatId/:messageId _DELETE_
+
+  params
+
+  ```json
+    chatId: 0 // id of chat
+    messageId: 0 // id of message
+  ```
+
+  no body in this request
+
+  no answer body
