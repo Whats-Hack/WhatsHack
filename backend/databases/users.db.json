@@ -1,0 +1,50 @@
+[
+  {
+    "id": 0,
+    "creationDate": "2000-01-01T00:00:00.000Z",
+    "lastConnection": "2000-01-01T00:00:00.000Z",
+    "friends": [],
+    "chats": [0, 1, 2],
+    "email": "example@text.com",
+    "avatar": "url",
+    "username": "chyVacheck",
+    "password": "example pass",
+    "firstName": "example firstName",
+    "lastName": "example lastName",
+    "birthday": "2002-12-19T00:00:00.000Z",
+    "city": "example city",
+    "isActive": true
+  },
+  {
+    "id": 1,
+    "creationDate": "2000-01-01T00:00:00.000Z",
+    "lastConnection": "2000-01-01T00:00:00.000Z",
+    "friends": [2],
+    "chats": [0],
+    "email": "example@text.com",
+    "avatar": "url",
+    "username": "Huguiz",
+    "password": "example pass",
+    "firstName": "example firstName",
+    "lastName": "example lastName",
+    "birthday": null,
+    "city": "example city",
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "creationDate": "2024-02-16T12:05:10.383Z",
+    "lastConnection": "2024-02-16T12:05:10.383Z",
+    "friends": [],
+    "chats": [],
+    "email": null,
+    "avatar": null,
+    "username": "chyVacheck_1",
+    "password": "123",
+    "firstName": null,
+    "lastName": null,
+    "birthday": null,
+    "city": null,
+    "isActive": true
+  }
+]

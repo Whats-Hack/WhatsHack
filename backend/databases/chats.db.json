@@ -1,0 +1,62 @@
+[
+  {
+    "id": 0,
+    "owners": [0, 1],
+    "messages": [
+      {
+        "id": 0,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 0
+      },
+      {
+        "id": 1,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 1
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "owners": [0, 2],
+    "messages": [
+      {
+        "id": 0,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 1
+      },
+      {
+        "id": 1,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "owners": [0, 3],
+    "messages": [
+      {
+        "id": 0,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 1
+      },
+      {
+        "id": 1,
+        "text": "example text",
+        "creationDate": "2000-01-01T00:00:00.000Z",
+        "modifyDate": "2000-01-01T00:00:00.000Z",
+        "owner": 2
+      }
+    ]
+  }
+]
