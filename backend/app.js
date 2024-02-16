@@ -2,6 +2,7 @@
 
 // ! modules
 require("dotenv").config();
+const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 
@@ -13,6 +14,14 @@ const { SERVER_SETTING } = require("./utils/constants");
 
 // ! init
 const server = express();
+
+// CORS
+server.use(
+  cors({
+    origin: ["*"],
+    optionsSuccessStatus: 200,
+  })
+);
 
 // to have access to body in request "parsing json"
 server.use(express.json());
