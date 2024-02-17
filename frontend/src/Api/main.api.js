@@ -57,6 +57,42 @@ class MainApi {
     );
   }
 
+  /*** send message to chat by id
+   * @params message: 'example password'
+   */
+  sendMessageToChatById(token, chatId, message) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats/${chatId}`,
+      {
+        method: 'POST',
+        headers: _headers,
+        body: JSON.stringify({ message: message }),
+      },
+      'send message in chat by id',
+    );
+  }
+
+  // ? PATCH
+
+  /*** send message to chat by id
+   * @params message: 'example password'
+   */
+  modifyMessageInChatById(token, chatId, messageId, message) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats/${chatId}/${messageId}`,
+      {
+        method: 'PATCH',
+        headers: _headers,
+        body: JSON.stringify({ message: message }),
+      },
+      'modify message in chat by id',
+    );
+  }
+
   // ? GET
 
   // todo soon

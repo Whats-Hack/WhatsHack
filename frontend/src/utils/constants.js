@@ -7,6 +7,8 @@ export const STATUS = {
 };
 
 export const API_SETTING = {
-  baseURL: STATUS.DEV ? 'http://localhost:5005/api' : '',
+  baseURL: STATUS.DEV
+    ? 'http://localhost:5005/api'
+    : 'https://whatshack.adaptable.app/api',
   contentType: 'application/json',
 };
