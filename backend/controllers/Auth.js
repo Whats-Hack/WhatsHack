@@ -20,8 +20,6 @@ class Auth {
   login(req, res) {
     const { username, password } = req.body;
 
-    console.log(req.body);
-
     if (!username || !password) {
       res.status(400);
       return res.send({ error: 'Username and password are required' });
