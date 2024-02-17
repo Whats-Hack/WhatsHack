@@ -1,4 +1,4 @@
-// * react
+// ! modules
 import { Navigate } from 'react-router-dom';
 
 export default function ProtectedRoute({ isActive, children, to = '/login' }) {
