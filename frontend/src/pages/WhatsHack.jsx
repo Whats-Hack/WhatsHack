@@ -7,7 +7,7 @@ export default function WhatsHack({children, setLogged, setCurrentUser}) {
 
     return(
         <div className="whatshack_container">
-            <NavBar />
+            <NavBar setLogged={setLogged} setCurrentUser={setCurrentUser} />
             {children}
         </div>
     )

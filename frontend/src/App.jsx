@@ -9,6 +9,7 @@ import WhatsHack from './pages/WhatsHack';
 // ? components
 import ProtectedRoute from './components/ProtectedRoute';
 import About from './components/About';
+import NavChats from './components/NavChats';
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -22,7 +23,7 @@ function App() {
     lastName: "",
     birthday: "",
     city: "",
-  })
+  });
 
   return (
     <>
@@ -30,6 +31,11 @@ function App() {
         <Route path="/" element={
           <ProtectedRoute isActive={logged}>
             <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser} />
+          </ProtectedRoute>
+        } />
+        <Route path="/chat" element={
+          <ProtectedRoute isActive={logged}>
+            <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser}><NavChats /></WhatsHack>
           </ProtectedRoute>
         } />
         <Route path="/about" element={

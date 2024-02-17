@@ -22,14 +22,12 @@ export default function Login({setShowLoginPage, setLogged, setCurrentUser}) {
 
             axios.post("https://whatshack.adaptable.app/api/auth/login", userToLogin)
             .then((result) => {
-                console.log(result.data.token);
                 userToLogin.token = result.data.token;
                 setCurrentUser(userToLogin);
                 setLogged(true);
                 navigate("/");
             })
-            // .catch((error) => setErrorMessage(error.response.data.error))
-            .catch((error) => console.log(error))
+            .catch((error) => setErrorMessage(error.response.data.error))
         }
     }
 

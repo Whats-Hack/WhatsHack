@@ -34,7 +34,6 @@ export default function Register({setShowLoginPage, setLogged, setCurrentUser}) 
 
             axios.post("https://whatshack.adaptable.app/api/auth/register", userToAdd)
             .then((result) => {
-                console.log(result.data.token);
                 userToAdd.token = result.data.token
                 setCurrentUser(userToAdd);
                 setLogged(true);
