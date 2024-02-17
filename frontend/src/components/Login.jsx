@@ -24,12 +24,9 @@ export default function Login({ setShowLoginPage, setLogged, setCurrentUser }) {
       password: password,
     };
 
-    console.log(userToLogin);
-
     mainApi
       .signin(userToLogin)
       .then((res) => {
-        console.log(res);
         userToLogin.token = res.token;
         setCurrentUser(userToLogin);
         setLogged(true);
