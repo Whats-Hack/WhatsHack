@@ -112,6 +112,43 @@ class MainApi {
       'get user info by id',
     );
   }
+
+  /*** get users chats info
+   * @params {
+   *  token: 'example token'
+   * }
+   */
+  getUsersChatsInfo(token) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats/`,
+      {
+        method: 'GET',
+        headers: _headers,
+      },
+      'get users chats info',
+    );
+  }
+
+  /*** get chat info by id
+   * @params {
+   *  token: 'example token',
+   *  chatId: 255
+   * }
+   */
+  getChatInfoById(token, chatId) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats/${chatId}`,
+      {
+        method: 'GET',
+        headers: _headers,
+      },
+      'get chat info by id',
+    );
+  }
 }
 
 // setting for main api
