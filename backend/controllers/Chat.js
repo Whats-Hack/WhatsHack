@@ -1,10 +1,10 @@
 // controller Chat.js
 
 // ! modules
-const fs = require("fs");
+const fs = require('fs');
 
 // ? utils
-const { DB } = require("./../utils/constants");
+const { DB } = require('./../utils/constants');
 
 class ChatController {
   constructor({ db }) {
@@ -106,7 +106,7 @@ class ChatController {
     // check
     if (!currentChat) {
       res.status(404);
-      res.send({ error: "No found chat" });
+      res.send({ error: 'No found chat' });
       return;
     }
 
@@ -123,7 +123,7 @@ class ChatController {
     const data = JSON.stringify(this._db.chats);
 
     // writing the JSON string content to a file
-    fs.writeFile("./databases/chats.db.json", data, (error) => {
+    fs.writeFile('./databases/chats.db.json', data, (error) => {
       // throwing the error
       // in case of a writing problem
       if (error) {
@@ -162,19 +162,19 @@ class ChatController {
     // check
     if (!currentChat) {
       res.status(404);
-      res.send({ error: "No found chat" });
+      res.send({ error: 'No found chat' });
       return;
     }
 
     const currentMessage = this._findMessageByIdInChat(
       currentChat.data,
-      messageId
+      messageId,
     );
 
     // check
     if (!currentMessage) {
       res.status(404);
-      res.send({ error: "No found message" });
+      res.send({ error: 'No found message' });
       return;
     }
 
@@ -198,7 +198,7 @@ class ChatController {
     const data = JSON.stringify(this._db.chats);
 
     // writing the JSON string content to a file
-    fs.writeFile("./databases/chats.db.json", data, (error) => {
+    fs.writeFile('./databases/chats.db.json', data, (error) => {
       // throwing the error
       // in case of a writing problem
       if (error) {

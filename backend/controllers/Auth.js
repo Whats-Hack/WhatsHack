@@ -1,12 +1,12 @@
 // Auth.js
 
 // ! modules
-const fs = require("fs");
+const fs = require('fs');
 
 // ? middlewares
-const { createJwtToken } = require("./../middlewares/Auth");
+const { createJwtToken } = require('./../middlewares/Auth');
 // ? utils
-const { DB } = require("./../utils/constants");
+const { DB } = require('./../utils/constants');
 
 class Auth {
   constructor({ db }) {
@@ -20,9 +20,11 @@ class Auth {
   login(req, res) {
     const { username, password } = req.body;
 
+    console.log(req.body);
+
     if (!username || !password) {
       res.status(400);
-      return res.send({ error: "Username and password are required" });
+      return res.send({ error: 'Username and password are required' });
     }
 
     for (let i = 0; i < this._db.length; i++) {
@@ -32,14 +34,14 @@ class Auth {
           res.send({ token: createJwtToken(user) });
         } else {
           res.status(400);
-          res.send({ error: "Password are wrong" });
+          res.send({ error: 'Password are wrong' });
         }
         return;
       }
     }
 
     res.status(404);
-    res.send({ error: "User not fround" });
+    res.send({ error: 'User not fround' });
   }
 
   // sing up
@@ -57,7 +59,7 @@ class Auth {
 
     if (!username || !password) {
       res.status(400);
-      return res.json({ error: "Username and password are required" });
+      return res.json({ error: 'Username and password are required' });
     }
 
     // validation for uniq username
@@ -65,7 +67,7 @@ class Auth {
       const user = this._db[i];
       if (user.username === username) {
         res.status(400);
-        return res.json({ error: "This username is already chosen" });
+        return res.json({ error: 'This username is already chosen' });
       }
     }
 
@@ -95,7 +97,7 @@ class Auth {
     const data = JSON.stringify(this._db);
 
     // writing the JSON string content to a file
-    fs.writeFile("./databases/users.db.json", data, (error) => {
+    fs.writeFile('./databases/users.db.json', data, (error) => {
       // throwing the error
       // in case of a writing problem
       if (error) {
@@ -106,7 +108,7 @@ class Auth {
 
       return res.send({
         data: newUser,
-        message: "User is created",
+        message: 'User is created',
         token: createJwtToken({ id: _id, chats: [] }),
       });
     });

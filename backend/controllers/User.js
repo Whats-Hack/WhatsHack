@@ -1,7 +1,7 @@
 // controller User.js
 
 // ? utils
-const { DB } = require("./../utils/constants");
+const { DB } = require('./../utils/constants');
 
 class UserController {
   constructor({ db }) {
@@ -71,12 +71,12 @@ class UserController {
           userSend.lastConnection = _user.lastConnection;
         }
 
-        return res.send({ message: "getChatsById", data: userSend });
+        return res.send({ message: 'getChatsById', data: userSend });
       }
     }
 
     res.status(404);
-    res.send({ error: "User not found" });
+    res.send({ error: 'User not found' });
   }
 }
 

@@ -1,13 +1,13 @@
 // router Auth.js
 
 // ! modules
-const routerAuth = require("express").Router();
+const routerAuth = require('express').Router();
 
 // ? controllers
-const authController = require("./../controllers/Auth");
+const authController = require('./../controllers/Auth');
 
-routerAuth.post("/login", authController.login);
+routerAuth.post('/login', authController.login);
 
-routerAuth.post("/register", authController.register);
+routerAuth.post('/register', authController.register);
 
 module.exports = routerAuth;
