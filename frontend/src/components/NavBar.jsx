@@ -5,6 +5,8 @@ import about from "../assets/about.png";
 import param from "../assets/param.png";
 import logout from "../assets/logout.png";
 
+import { Link } from "react-router-dom";
+
 export default function NavBar({setLogged, setCurrentUser}) {
 
     return (
@@ -12,7 +14,7 @@ export default function NavBar({setLogged, setCurrentUser}) {
         <div className="navbar_image_container"><img className="navbar_image" src={chatImg} alt="ChatImg" /></div>
         <div className="navbar_image_container"><img className="navbar_image" src={addUserImg} alt="ChatImg" /></div>
         <div className="navbar_image_container"><img className="navbar_image" src={param} alt="ChatImg" /></div>
-        <div className="navbar_image_container"><img className="navbar_image" src={about} alt="ChatImg" /></div>
+        <Link to={"/about"}><div className="navbar_image_container"><img className="navbar_image" src={about} alt="ChatImg" /></div></Link>
         <div className="navbar_image_container logout_image"><img className="navbar_image" src={logout} alt="ChatImg" /></div>
     </div>
     )

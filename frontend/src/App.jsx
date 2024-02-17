@@ -8,6 +8,7 @@ import WhatsHack from './pages/WhatsHack';
 
 // ? components
 import ProtectedRoute from './components/ProtectedRoute';
+import About from './components/About';
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -29,6 +30,11 @@ function App() {
         <Route path="/" element={
           <ProtectedRoute isActive={logged}>
             <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser} />
+          </ProtectedRoute>
+        } />
+        <Route path="/about" element={
+          <ProtectedRoute isActive={logged}>
+            <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser}><About /></WhatsHack>
           </ProtectedRoute>
         } />
         <Route path="/login" element={<Welcome setLogged={setLogged} setCurrentUser={setCurrentUser} />} />
