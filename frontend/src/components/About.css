@@ -1,6 +1,7 @@
 .about_container {
-  max-width: 60%;
-  margin: auto;
+  width: 80%;
+  max-width: 1400px;
+  margin: 2rem auto auto;
   background-color: rgb(238, 238, 238);
   border-radius: 2rem;
   text-align: center;
@@ -30,7 +31,8 @@
 }
 
 .about_image {
-  max-width: 15%;
+  min-width: 100px;
+  width: 150px;
   margin: 0 2rem;
   padding: 1rem;
   border-radius: 1rem;
