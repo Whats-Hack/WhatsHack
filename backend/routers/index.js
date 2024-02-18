@@ -10,6 +10,7 @@ const auth = require('./../middlewares/Auth');
 const routerAuth = require('./Auth');
 const routerUsers = require('./Users');
 const routerChats = require('./Chats');
+const routerNotFound = require('./NotFound');
 
 // Authorization
 router.use('/api/auth', routerAuth);
@@ -21,5 +22,8 @@ router.use('/api/users', auth.isUserAuthorized, routerUsers);
 
 // Chats
 router.use('/api/chats', auth.isUserAuthorized, routerChats);
+
+// ? 404
+router.use(routerNotFound);
 
 module.exports = router;

@@ -95,7 +95,6 @@ class MainApi {
 
   // ? GET
 
-  // todo soon
   /*** get user info
    * @params token: 'example token',
    */

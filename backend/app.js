@@ -39,5 +39,5 @@ server.use(router);
 
 // ? start server
 server.listen(SERVER_SETTING.PORT, () => {
-  console.log(`JSON Server is running at port ${SERVER_SETTING.PORT}`);
+  console.log(`Server is running at port ${SERVER_SETTING.PORT}`);
 });
