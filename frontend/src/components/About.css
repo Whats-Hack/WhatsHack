@@ -97,3 +97,29 @@
 .about_a:hover {
   transform: translateY(1px);
 }
+
+@media screen and (max-width: 768px){
+
+  .about_container {
+      max-width: 90%;
+      padding: 2rem;
+      margin: 1rem auto;
+  }
+
+  .about_h1 {
+    font-size: 2.2em;
+  }
+
+  .about_p {
+    font-size: 1rem;
+  }
+
+  .about_image {
+    max-width: 40%;
+    margin: 0 1rem;
+  }
+
+  .about_h2 {
+    font-size: 1.2em;
+  }
+}

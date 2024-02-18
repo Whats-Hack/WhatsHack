@@ -20,7 +20,7 @@ export default function About() {
         provide a hands-on experience in developing a real-world application
         while honing their skills in web development.
       </p>
-      <h2 className='about_h2'>WhatsHack is proposed by :</h2>
+      <h2 className='about_h2'>WhatsHack is propulsed by :</h2>
       <div className='about_image_container'>
         <img src={reactLogo} alt='logotype React' className='about_image' />
         <img src={apiLogo} alt='logotype API' className='about_image' />

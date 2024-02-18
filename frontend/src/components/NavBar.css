@@ -17,12 +17,13 @@
 
 .navbar_image_container {
   background-color: rgb(238, 246, 255);
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
+  margin: 0 0 1em 0;
   border-radius: 0.5em;
   padding: 0.35em;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
   transition: 0.1s;
-  border: 1px solid transparent;
+  box-sizing: border-box;
 }
 
 .navbar_image_container:hover {
@@ -34,8 +35,7 @@
 
 .navbar_image_container.logout_image {
   background-color: rgb(201, 126, 126);
-  margin-top: auto;
-  margin-bottom: 0;
+  margin: auto 0 0 0;
 }
 
 .navbar_image_container.logout_image:hover {
@@ -46,4 +46,36 @@
   width: 100%;
   height: 100%;
   display: block;
+}
+
+
+@media screen and (max-width: 768px){
+
+  .navbar_container {
+    max-width: 100%;
+    min-height: 60px;
+    max-height: 60px;
+    flex-direction: row;
+  }
+
+  .navbar_image_container {
+    margin: 0 1em 0 0;
+    padding: 0.35em;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
+    transition: 0.1s;
+    height: 100%;
+  }
+  
+  .navbar_image_container:hover {
+    background-color: rgb(255, 255, 255);
+    transform: scale(1.1);
+    cursor: pointer;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+  }
+  
+  .navbar_image_container.logout_image {
+    background-color: rgb(201, 126, 126);
+    margin: 0 0 0 auto;
+  }
+
 }

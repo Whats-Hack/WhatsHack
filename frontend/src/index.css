@@ -34,3 +34,9 @@ body {
     background-color: #f9f9f9;
   }
 }
+
+@media screen and (max-width: 768px){
+  .navchats_container {
+      height: 100%;
+  }
+}

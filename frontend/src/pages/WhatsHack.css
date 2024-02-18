@@ -4,3 +4,10 @@
   padding: 0;
   display: flex;
 }
+
+@media screen and (max-width: 768px){
+
+  .whatshack_container {
+    flex-direction: column;
+  }
+}
