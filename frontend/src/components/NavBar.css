@@ -65,8 +65,8 @@
     /* padding: 0.35em; */
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
     transition: 0.1s;
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 45px;
+    max-width: 45px;
   }
 
   .navbar_image_container:hover {

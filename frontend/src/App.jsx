@@ -10,6 +10,7 @@ import WhatsHack from './pages/WhatsHack';
 import ProtectedRoute from './components/ProtectedRoute';
 import About from './components/About';
 import NavChats from './components/NavChats';
+import Discussion from './components/Discussion';
 
 function App() {
   const [logged, setLogged] = useState(true);
@@ -36,6 +37,11 @@ function App() {
         <Route path="/chat" element={
           <ProtectedRoute isActive={logged}>
             <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser}><NavChats /></WhatsHack>
+          </ProtectedRoute>
+        } />
+        <Route path="/chat/:chatId" element={
+          <ProtectedRoute isActive={logged}>
+            <WhatsHack setLogged={setLogged} setCurrentUser={setCurrentUser}><NavChats /><Discussion /></WhatsHack>
           </ProtectedRoute>
         } />
         <Route path="/about" element={
