@@ -43,6 +43,7 @@
 
   ```json
   {
+    <!-- status code 200 -->
     "token": "some token" // id: iehbvpehwifbvpehf -> 12345
   }
   ```
@@ -68,6 +69,7 @@
 
   ```json
   {
+    <!-- status code 201 -->
     "data": {
       "id": "id", // uniq // don't be a changeably
       "creationDate": "2024-02-15T15:15:24.947Z", // type is a date
@@ -91,6 +93,8 @@
   }
   ```
 
+---
+
 ### users
 
 ```
@@ -104,24 +108,39 @@
 
   ```json
   {
+    <!-- status code 200 -->
     "data": [
       {
         "id": 0,
-        "creationDate": "2000-01-01T00:00:00.000Z",
-        "lastConnection": "2000-01-01T00:00:00.000Z", // only if they are friends
-        "friends": [],
-        "chats": [0],
-        "email": "example@text.com",
         "avatar": "url",
-        "username": "chyVacheck",
-        "password": "example pass",
-        "firstName": "example firstName",
-        "lastName": "example lastName",
-        "birthday": "2000-01-01T00:00:00.000Z",
-        "city": "example city",
-        "isActive": true
+        "username": "Huguiz"
       }
     ]
+  }
+  ```
+
+- domain/api/users/me _GET_
+
+  answer
+
+  ```json
+  {
+    <!-- status code 200 -->
+    "data": {
+      "id": 0,
+      "creationDate": "2000-01-01T00:00:00.000Z",
+      "lastConnection": "2000-01-01T00:00:00.000Z",
+      "friends": [],
+      "chats": [],
+      "email": "example@text.com",
+      "avatar": "url",
+      "username": "chyVacheck",
+      "firstName": "example firstName",
+      "lastName": "example lastName",
+      "birthday": "2000-01-01T00:00:00.000Z",
+      "city": "example city",
+      "isActive": true // or false
+    }
   }
   ```
 
@@ -130,13 +149,14 @@
   params
 
   ```json
-    id: 0 // id of user
+    userId: 0 // id of user
   ```
 
   answer
 
   ```json
   {
+    <!-- status code 200 -->
     "data": {
       "id": 0,
       "creationDate": "2000-01-01T00:00:00.000Z",
@@ -148,11 +168,26 @@
       "firstName": "example firstName",
       "lastName": "example lastName",
       "birthday": "2000-01-01T00:00:00.000Z",
-      "city": "example city",
-      "isActive": true
+      "city": "example city"
     }
   }
   ```
+
+  ```json
+  {
+    <!-- status code 410 -->
+    "error": "User deleted his account :("
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 404 -->
+    "error": "User not found"
+  }
+  ```
+
+---
 
 ### chats
 
@@ -162,39 +197,21 @@
 
   ```json
   {
+    <!-- status code 200 -->
     "data": [
-      // only chats that user has
+      // only chats that user has with last message
       {
         "id": 0,
-        "creationDate": "2000-01-01T00:00:00.000Z",
-        "lastConnection": "2000-01-01T00:00:00.000Z",
-        "friends": [],
-        "chats": [0],
-        "email": "example@text.com",
-        "avatar": "url",
-        "username": "chyVacheck",
-        "password": "example pass",
-        "firstName": "example firstName",
-        "lastName": "example lastName",
-        "birthday": "2002-12-19T00:00:00.000Z",
-        "city": "example city",
-        "isActive": true
-      },
-      {
-        "id": 1,
-        "creationDate": "2000-01-01T00:00:00.000Z",
-        "lastConnection": "2000-01-01T00:00:00.000Z",
-        "friends": [],
-        "chats": [0],
-        "email": "example@text.com",
-        "avatar": "url",
-        "username": "Huguiz",
-        "password": "example pass",
-        "firstName": "example firstName",
-        "lastName": "example lastName",
-        "birthday": null,
-        "city": "example city",
-        "isActive": true
+        "owners": [0, 1],
+        "messages": [
+          {
+            "id": 8,
+            "text": "Also message from website he-he",
+            "creationDate": "2024-02-17T17:00:02.833Z",
+            "modifyDate": null,
+            "owner": 1
+          }
+        ]
       }
     ]
   }
@@ -212,7 +229,7 @@
 
   ```json
   {
-    // only if user is one of owner
+    <!-- status code 200 -->
     "data": {
       "id": 0,
       "owners": [0, 1],
@@ -236,12 +253,66 @@
   }
   ```
 
+  ```json
+  {
+    <!-- status code 403 -->
+    "error": "You don't have permission"
+  }
+  ```
+
+- domain/api/chats _POST_
+
+  body
+
+  ```json
+  {
+    "userId": 2, // ! required // id of user that you want to create a new chat
+    "message": "Hello it's a new chat" // can't be empty
+  }
+  ```
+
+  answer
+
+  ```json
+  {
+    <!-- status code 201 -->
+    "data": {
+      "id": 1,
+      "owners": [0, 2],
+      "messages": [
+        // if was in body of request
+        {
+          "id": 0,
+          "text": "Hello it's a new chat",
+          "creationDate": "2024-02-19T16:16:27.176Z",
+          "modifyDate": null,
+          "owner": 0
+        }
+      ]
+    }
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 403 -->
+    "error": "User already has own notes"
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 403 -->
+    "error": "You already have chat"
+  }
+  ```
+
 - domain/api/chats/:chatId _POST_
 
   params
 
   ```json
-    chatId: 0 // id of chat
+    chatId: 0  // ! required // id of chat
   ```
 
   body
@@ -272,6 +343,8 @@
   ```
 
   no answer body
+
+---
 
 #### soon
 

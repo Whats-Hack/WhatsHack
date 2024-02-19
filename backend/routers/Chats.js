@@ -17,6 +17,9 @@ routerChats.get('/:chatId', chatController.getChatById);
 // ? POST
 
 // send message
+routerChats.post('/', chatController.createChat);
+
+// send message
 routerChats.post('/:chatId', chatController.sendMessage);
 
 // ? PATCH
