@@ -104,11 +104,13 @@ class Auth {
         return res.send({ error: error });
       }
 
-      return res.send({
+      res.status(201);
+      res.send({
         data: newUser,
         message: 'User is created',
         token: createJwtToken({ id: _id, chats: [] }),
       });
+      return;
     });
   }
 }
