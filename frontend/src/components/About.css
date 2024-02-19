@@ -100,12 +100,11 @@
   transform: translateY(1px);
 }
 
-@media screen and (max-width: 768px){
-
+@media screen and (max-width: 768px) {
   .about_container {
-      max-width: 90%;
-      padding: 2rem;
-      margin: 1rem auto;
+    max-width: 90%;
+    padding: 2rem;
+    margin: 96px auto;
   }
 
   .about_h1 {

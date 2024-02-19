@@ -1,128 +1,154 @@
 .navchats_container {
-    background-color: white;
-    height: 100vh;
-    overflow-y: auto;
-    box-shadow: 0 0 5px 5px rgba(37, 37, 37, 0.5);
-    box-sizing: border-box;
-    margin: 0 auto 0 0;
-    width: 20vw;
-    min-width: 250px;
+  background-color: white;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 0 0 5px 5px rgba(37, 37, 37, 0.5);
+  box-sizing: border-box;
+  margin: 0 auto 0 0;
+  width: 20vw;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
 }
 
 .navchats_h2_container {
-    padding: 0.7rem 0 0.7rem 1.5rem;
-    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgb(171, 216, 255) 100%);
+  padding: 0.7rem 0 0.7rem 1.5rem;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgb(171, 216, 255) 100%
+  );
 }
 
 .navchats_h2 {
-    margin: 0;
+  margin: 0;
 }
 
 .navchats_container_limited {
-    background-color: aliceblue;
+  /* background-color: aliceblue; */
+  background-color: rgb(255, 255, 255);
+  padding-bottom: 20px;
+  height: 100%;
 }
 
 .navchats_chat_container {
-    position: relative;
-    width: 100%;
-    max-height: 93px;
-    margin: 0;
-    background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
-    transition: 0.3s;
-    padding: 0.5rem 1rem;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-height: 93px;
+  margin: 0;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  transition: 0.3s;
+  padding: 0.5rem 1.6rem 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
 .navchats_chat_container:hover {
-    transform: scale(0.98);
-    background-color: aliceblue;
-    cursor: pointer;
+  transform: scale(0.98);
+  background-color: aliceblue;
+  cursor: pointer;
 }
 
 .navchats_avatar {
-    height: 4rem;
-    width: 4rem;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0.5rem 0;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 2px, rgba(0, 0, 0, 0.09) 0px 5px 3px, rgba(0, 0, 0, 0.09) 0px 12px 8px;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0.5rem 0;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 2px, rgba(0, 0, 0, 0.09) 0px 5px 3px,
+    rgba(0, 0, 0, 0.09) 0px 12px 8px;
 }
 
 .navchats_text_container {
-    margin: 0 auto 0 0;
-    padding: 0.1rem 1rem 0 1rem;
-    overflow: hidden;
-    height: 100%;
-    align-self: flex-start
+  margin: 0 auto 0 0;
+  padding: 0.1rem 1rem 0 1rem;
+  overflow: hidden;
+  height: 100%;
+  align-self: flex-start;
 }
 
 .navchats_name {
-    margin: 0;
-    padding: 0.5rem 0;
-    font-weight: 700;
+  margin: 0;
+  padding: 0.5rem 0;
+  font-weight: 700;
 }
 
 .navchats_text {
-    margin: 0;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #toggleButton {
-    display: none;
+  display: none;
 }
 
 #sideButton {
-    display: flex;
-    visibility: hidden;
-    width: 0;
+  display: flex;
+  visibility: hidden;
+  width: 0;
 }
 
 @media screen and (max-width: 768px) {
-    .navchats_container {
-        width: 100%;
-    }
+  .navchats_container {
+    width: 100%;
+  }
 
-    #panel {
-        position: fixed;
-        top: 60px;
-        left: -105vw;
-        width: 100%;
-        height: 93vh;
-        transition: 0.4s;
-    }
-    
-    #toggleButton:checked ~ #panel {
-        left: 0;
-    }
+  .navchats_chat_container:hover {
+    transform: scale(1);
+    background-color: rgb(255, 255, 255);
+    cursor: default;
+  }
 
-    #sideButton {
-        visibility: visible;
-        position: absolute;
-        top: 70px;
-        left: 10px;
-        background-color: rgb(97, 194, 201);
-        padding: 6px;
-        cursor: pointer;
-        transition: 0.6s;
-        z-index: 50;
-        user-select: none;
-        height: 20px;
-        width: 20px;
-        border-radius: 1.5em;
-        border: #868686 2px solid;
-    }
+  .navchats_chat_container:active {
+    transform: scale(0.98);
+    background-color: aliceblue;
+    cursor: pointer;
+  }
 
-    #sideButton:hover {
-        background-color: rgb(85, 171, 177);
-        border: #5c5c5c 2px solid;
-        transform: translateX(2px);
-    }
-    
-    #toggleButton:checked + #sideButton {
-        rotate: 180deg;
-        right: 26px;
-        left: auto;
-    }
+  #panel {
+    position: fixed;
+    top: 70px;
+    left: -105vw;
+    width: 100%;
+    height: 93vh;
+    transition: 0.4s;
+  }
+
+  #toggleButton:checked ~ #panel {
+    left: 0;
+  }
+
+  #sideButton {
+    visibility: visible;
+    position: absolute;
+    top: 77px;
+    left: 10px;
+    background-color: rgb(97, 194, 201);
+    padding: 6px;
+    cursor: pointer;
+    transition: 0.6s;
+    z-index: 50;
+    user-select: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 1.5em;
+    border: #868686 2px solid;
+  }
+
+  #sideButton:hover {
+    background-color: rgb(85, 171, 177);
+    border: #5c5c5c 2px solid;
+    transform: translateX(2px);
+  }
+
+  #toggleButton:checked + #sideButton {
+    rotate: 180deg;
+    right: 26px;
+    left: auto;
+  }
 }
