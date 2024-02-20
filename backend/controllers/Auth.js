@@ -29,7 +29,24 @@ class Auth {
       const user = this._db[i];
       if (user.username === username) {
         if (user.password === password) {
-          res.send({ token: createJwtToken(user) });
+          res.send({
+            token: createJwtToken(user),
+            data: {
+              id: user.id,
+              creationDate: user.creationDate,
+              lastConnection: user.lastConnection,
+              friends: user.friends,
+              chats: user.chats,
+              email: user.email,
+              avatar: user.avatar,
+              username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              birthday: user.birthday,
+              city: user.city,
+              isActive: user.isActive,
+            },
+          });
         } else {
           res.status(400);
           res.send({ error: 'Password are wrong' });

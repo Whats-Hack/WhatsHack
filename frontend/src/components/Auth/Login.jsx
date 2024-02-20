@@ -30,9 +30,10 @@ export default function Login({ setCurrentUser }) {
       })
       .then((res) => {
         setCurrentUser((preState) => {
-          return { ...preState, ...{ token: res.token } };
+          return { ...preState, ...{ token: res.token }, ...res.data };
         });
         localStorage.setItem('token', res.token);
+
         navigate('/');
       })
       .catch((errRes) => {

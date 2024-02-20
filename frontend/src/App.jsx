@@ -47,17 +47,21 @@ function App() {
   useEffect(() => {
     const _token = localStorage.getItem('token');
 
-    mainApi
-      .getUserInfo(_token)
-      .then((res) => {
-        setCurrentUser((preState) => {
-          return { ...preState, ...{ token: _token }, ...res.data };
+    if (_token) {
+      mainApi
+        .getUserInfo(_token)
+        .then((res) => {
+          setCurrentUser((preState) => {
+            return { ...preState, ...{ token: _token }, ...res.data };
+          });
+        })
+        .catch((errRes) => console.error(errRes.error))
+        .finally(() => {
+          setTokenCheck(true);
         });
-      })
-      .catch((errRes) => console.error(errRes.error))
-      .finally(() => {
-        setTokenCheck(true);
-      });
+    } else {
+      setTokenCheck(true);
+    }
   }, [tokenCheck]);
 
   return (
