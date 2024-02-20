@@ -25,5 +25,32 @@
         "owner": 1
       }
     ]
+  },
+  {
+    "id": 1,
+    "owners": [2, 1],
+    "messages": [
+      {
+        "id": 0,
+        "text": "This is the second discussion !",
+        "creationDate": "2024-02-17T17:00:02.833Z",
+        "modifyDate": null,
+        "owner": 1
+      },
+      {
+        "id": 1,
+        "text": "Nice I like this chat",
+        "creationDate": "2024-02-19T16:53:45.467Z",
+        "modifyDate": null,
+        "owner": 2
+      },
+      {
+        "id": 2,
+        "text": "He-he me too !!!!",
+        "creationDate": "2024-02-19T16:53:53.189Z",
+        "modifyDate": null,
+        "owner": 1
+      }
+    ]
   }
 ]

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-// ? utils
+// ? api
 import mainApi from '../../Api/main.api';
 
 export default function Login({ setCurrentUser }) {

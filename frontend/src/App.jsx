@@ -40,6 +40,10 @@ function App() {
     city: null,
     isActive: false,
   });
+  // all chats
+  const [allChats, setAllChats] = useState([]);
+  // all users
+  const [allUsers, setAllUsers] = useState([]);
 
   // ? useEffects
 
@@ -64,6 +68,30 @@ function App() {
     }
   }, [tokenCheck]);
 
+  // try to get all chats info
+  useEffect(() => {
+    if (!currentUser.token) return;
+
+    mainApi
+      .getUsersChatsInfo(currentUser.token)
+      .then((res) => {
+        setAllChats(res.data);
+      })
+      .catch((errRes) => console.error(errRes.error))
+  }, [tokenCheck]);
+
+  // try to get all users info // not all info, just small one part
+  useEffect(() => {
+    if (!currentUser.token) return;
+
+    mainApi
+      .getAllUsersInfo(currentUser.token)
+      .then((res) => {
+        setAllUsers(res.data);
+      })
+      .catch((errRes) => console.error(errRes.error))
+  }, [tokenCheck]);
+  
   return (
     <>
       {tokenCheck ? (
@@ -82,7 +110,7 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <NavChats />
+                  <NavChats currentUser={currentUser} allChats={allChats} allUsers={allUsers} />
                 </WhatsHack>
               </ProtectedRoute>
             }
@@ -93,7 +121,7 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <NavChats />
+                  <NavChats currentUser={currentUser} allChats={allChats} allUsers={allUsers} />
                   <Discussion />
                 </WhatsHack>
               </ProtectedRoute>

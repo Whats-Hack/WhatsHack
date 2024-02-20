@@ -24,6 +24,8 @@ class ChatController {
     this.modifyMessage = this.modifyMessage.bind(this);
     this._findChatById = this._findChatById.bind(this);
     this._findMessageByIdInChat = this._findMessageByIdInChat.bind(this);
+    this.getTheLastMessagesInChatById =
+      this.getTheLastMessagesInChatById.bind(this);
   }
 
   /*** find chat by id
@@ -62,7 +64,7 @@ class ChatController {
   // return all users chats
   getAllChats(req, res, next) {
     const chats = req.user.chats.map((chatId) => {
-      const _chat = this._findChatById(chatId).data;
+      const _chat = { ...this._findChatById(chatId).data };
 
       const _message = _chat.messages[_chat.messages.length - 1];
 
@@ -92,6 +94,31 @@ class ChatController {
     const chat = this._findChatById(chatId).data;
 
     return res.send({ data: chat });
+  }
+
+  // return one last messages from chat by id
+  getTheLastMessagesInChatById(req, res, next) {
+    const chatId = Number(req.params.chatId);
+    const messageId = Number(req.params.messageId);
+
+    // valid
+    if (!req.user.chats.includes(chatId)) {
+      res.status(403);
+      res.send({ error: "You don't have permission" });
+      return;
+    }
+
+    const chat = this._findChatById(chatId).data;
+
+    const messages = chat.messages.filter((message) => message.id > messageId);
+
+    if (messages.length > 0) {
+      return res.send({ data: messages });
+    }
+
+    res.status(304);
+    res.send();
+    return;
   }
 
   // ? POST

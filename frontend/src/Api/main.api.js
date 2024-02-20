@@ -11,12 +11,12 @@ class MainApi {
     // check answer
     if (res.ok) {
       // print to console if development
-      if (STATUS.DEV)
-        console.log(
-          `The request to server [${url}]${
-            message && ` for [${message}]`
-          } was successfully processed`,
-        );
+      // if (STATUS.DEV)
+      //   console.log(
+      //     `The request to server [${url}]${
+      //       message && ` for [${message}]`
+      //     } was successfully processed`,
+      //   );
 
       return res.json();
     }
