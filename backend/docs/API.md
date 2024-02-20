@@ -258,6 +258,43 @@
   }
   ```
 
+- domain/api/chats/:chatId/:messageId _GET_
+
+  params
+
+  ```json
+    chatId: 0 // id of chat
+    messageId: 0 // id of the last message that u have
+  ```
+
+  answer
+
+  ```json
+  <!-- status code 200 -->
+  {
+    "data": [
+      {
+        "id": 2,
+        "text": "He-he me also",
+        "creationDate": "2024-02-19T16:53:53.189Z",
+        "modifyDate": null,
+        "owner": 1
+      }
+    ]
+  }
+  ```
+
+  ```json
+  <!-- status code 304 -->
+  ```
+
+  ```json
+  <!-- status code 403 -->
+  {
+    "error": "You don't have permission"
+  }
+  ```
+
 - domain/api/chats _POST_
 
   body

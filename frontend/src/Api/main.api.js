@@ -21,6 +21,14 @@ class MainApi {
       return res.json();
     }
 
+    //
+    if (res.status === 304) {
+      return {
+        statusText: res.statusText,
+        status: res.status,
+      };
+    }
+
     // errors
     const error = res.json();
     return error.then((errorObj) =>
@@ -159,7 +167,7 @@ class MainApi {
    *  token: 'example token'
    * }
    */
-  getUserInfoById(token, userId) {
+  getOneUserInfoById(token, userId) {
     const _headers = this._headers;
     _headers.authorization = token;
     return this._request(
@@ -177,7 +185,7 @@ class MainApi {
    *  token: 'example token'
    * }
    */
-  getUsersChatsInfo(token) {
+  getAllChatsInfo(token) {
     const _headers = this._headers;
     _headers.authorization = token;
     return this._request(
@@ -196,7 +204,7 @@ class MainApi {
    *  chatId: 255
    * }
    */
-  getChatInfoById(token, chatId) {
+  getOneChatInfoById(token, chatId) {
     const _headers = this._headers;
     _headers.authorization = token;
     return this._request(
@@ -206,6 +214,26 @@ class MainApi {
         headers: _headers,
       },
       'get chat info by id',
+    );
+  }
+
+  /*** get the lattes messages by chat id
+   * @params {
+   *  token: 'example token',
+   *  chatId: 255,
+   *  lastMessageId: 255,
+   * }
+   */
+  getLastMessagesOfOneChatById(token, chatId, lastMessageId) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats/${chatId}/${lastMessageId}`,
+      {
+        method: 'GET',
+        headers: _headers,
+      },
+      'get lattes messages by chat id',
     );
   }
 }
