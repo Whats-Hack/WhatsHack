@@ -14,6 +14,12 @@ routerChats.get('/', chatController.getAllChats);
 // get 1 users chat
 routerChats.get('/:chatId', chatController.getChatById);
 
+// get the messages after message with id from chat
+routerChats.get(
+  '/:chatId/:messageId',
+  chatController.getTheLastMessagesInChatById,
+);
+
 // ? POST
 
 // send message
