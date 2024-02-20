@@ -12,3 +12,10 @@ export const API_SETTING = {
     : 'https://whatshack.adaptable.app/api',
   contentType: 'application/json',
 };
+
+export const TIMER_REFRESH = {
+  CHATS: {
+    ONE: 1_000,
+    ALL: 2_000,
+  },
+};

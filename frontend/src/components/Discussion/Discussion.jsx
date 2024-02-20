@@ -1,120 +1,214 @@
+/* eslint-disable react/prop-types */
 // ! modules
-import { MessageBox, Input, Avatar } from 'react-chat-elements';
+import { MessageBox, Input } from 'react-chat-elements';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 
 // ? styles
 import './Discussion.css';
 import './react-chat-elements.css';
 
-export default function Discussion() {
+// ? api
+import mainApi from '../../Api/main.api';
+
+// ? assets
+import defaultIcon from './../../assets/default_avatar.png';
+
+// ? utils
+import { TIMER_REFRESH } from '../../utils/constants';
+
+export default function Discussion({
+  currentUser,
+  allChats,
+  setAllChats,
+  allUsers,
+}) {
+  // id of current chat
+  const { chatId } = useParams();
+
+  const chatRef = useRef(null);
+
+  // ? useStates
+
+  const [currentChat, setCurrentChat] = useState({
+    id: null,
+    owners: [],
+    messages: [],
+  });
+  const [chatMater, setChatMater] = useState({
+    id: null,
+    avatar: null,
+    username: null,
+  });
+
+  //
+  const [inputValue, setInputValue] = useState('');
+
+  // ? function
+  function onSubmit() {
+    if (!inputValue.trim()) return;
+
+    mainApi
+      .sendMessageToChatById(currentUser.token, chatId, inputValue.trim())
+      .then((res) => {
+        const _preStateAllChats = [...allChats];
+
+        for (let i = 0; i < _preStateAllChats.length; i++) {
+          const _chat = _preStateAllChats[i];
+          if (String(_chat.id) === String(chatId)) {
+            _chat.messages.push(res.data);
+          }
+        }
+
+        setAllChats(_preStateAllChats);
+
+        const _preState = { ...currentChat };
+        _preState.messages.push(res.data);
+
+        setCurrentChat(_preState);
+        setInputValue('');
+
+        setTimeout(() => {
+          chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }, 10);
+      })
+      .catch((errRes) => {
+        console.error(errRes);
+        console.error(errRes.error);
+      });
+  }
+
+  // ? useEffects
+
+  // init of chat
+  useEffect(() => {
+    for (let i = 0; i < allChats.length; i++) {
+      const _chat = allChats[i];
+      if (String(_chat.id) === String(chatId)) {
+        setCurrentChat(_chat);
+      }
+    }
+  }, [allChats, chatId]);
+
+  // find a chatMater
+  useEffect(() => {
+    if (typeof currentChat.id !== 'number') return;
+
+    const _id = currentChat.owners.filter((item) => item !== currentUser.id)[0];
+
+    for (let i = 0; i < allUsers.length; i++) {
+      const _user = allUsers[i];
+      if (String(_user.id) === String(_id)) {
+        setChatMater({
+          id: _id,
+          avatar: _user.avatar || defaultIcon,
+          username: _user.username,
+        });
+        break;
+      }
+    }
+  }, [allUsers, currentChat, currentUser.id]);
+
+  // init messages
+  useEffect(() => {
+    if (typeof currentChat.id !== 'number') return;
+
+    mainApi
+      .getOneChatInfoById(currentUser.token, currentChat.id)
+      .then((res) => {
+        setAllChats((preState) => {
+          for (let i = 0; i < preState.length; i++) {
+            const _chat = preState[i];
+            _chat.messages = res.data.messages;
+          }
+          return preState;
+        });
+        setCurrentChat(res.data);
+      })
+      .catch((errRes) => console.error(errRes.error));
+  }, [currentChat.id, currentUser.token, setAllChats]);
+
+  // check messages per tick
+  useEffect(() => {
+    if (typeof currentChat.id !== 'number') return;
+
+    const _interval = setInterval(() => {
+      mainApi
+        .getLastMessagesOfOneChatById(
+          currentUser.token,
+          currentChat.id,
+          currentChat.messages[currentChat.messages.length - 1].id,
+        )
+        .then((res) => {
+          setAllChats((preState) => {
+            for (let i = 0; i < preState.length; i++) {
+              const _chat = preState[i];
+              if (_chat.id === chatId) {
+                _chat.messages = [..._chat.messages, ...res.data];
+              }
+            }
+            return preState;
+          });
+
+          const _preState = { ...currentChat };
+          _preState.messages = [..._preState.messages, ...res.data];
+
+          setCurrentChat(_preState);
+        })
+        .catch((errRes) => console.error(errRes.error));
+    }, TIMER_REFRESH.CHATS.ONE);
+
+    return () => {
+      clearInterval(_interval);
+    };
+  }, [
+    chatId,
+    currentChat,
+    currentChat.id,
+    currentChat.messages,
+    currentUser.token,
+    setAllChats,
+  ]);
+
   return (
     <div className='discussion_container'>
       <div className='discussion_header'>
-        <h2 className='discussion_h2'>Discussion with Luis</h2>
+        <h2 className='discussion_h2'>Discussion with {chatMater.username}</h2>
       </div>
-      <div className='discussion_content'>
-        <MessageBox
-          title='Luis Juncos'
-          avatar={
-            'https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg'
-          }
-          position={'left'}
-          type={'text'}
-          text={
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet id neque nec accumsan. Quisque id congue ipsum, rutrum tempor magna. Fusce ante arcu, tempor vitae euismod eget, vulputate eu eros. Suspendisse laoreet pharetra magna eu euismod. Nulla et faucibus nisi. Proin gravida ligula eget placerat fermentum. Vestibulum lacinia et nisi vitae posuere. Mauris at suscipit metus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris sit amet augue elementum orci pretium suscipit. Sed blandit vel nisl mollis luctus.'
-          }
-          date={new Date('01/01/2000')}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'t'}
-          date={'e'}
-          dateString={'15h05'}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eleifend, ipsum id pharetra venenatis, quam dui imperdiet velit, vitae finibus eros ex at magna. Aliquam pellentesque nibh eget tellus viverra dignissim posuere vitae lacus. Donec facilisis blandit lectus vitae ultricies. Aenean fermentum ultrices condimentum. Donec ut neque ac tortor ultricies viverra sed vel urna. Praesent quis placerat diam, sit amet consequat purus.'
-          }
-          date={'e'}
-          dateString={'15/03 15h05'}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'test'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'ttteeeesst'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'react.svg'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'react.svg'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'react.svg'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'react.svg'}
-          date={new Date()}
-        />
-        <MessageBox
-          title='Me'
-          position={'right'}
-          type={'text'}
-          text={'react.svg'}
-          date={new Date()}
-        />
-        {/* <MessageBox
-                    title='Me'
-                    position={'right'}
-                    type={'text'}
-                    text={'react.svg'}
-                    date={new Date()}
-                />
-                <MessageBox
-                    title='Me'
-                    position={'right'}
-                    type={'text'}
-                    text={'react.svg'}
-                    date={new Date()}
-                />
-                <MessageBox
-                    title='Me'
-                    position={'right'}
-                    type={'text'}
-                    text={'react.svg'}
-                    date={new Date()}
-                /> */}
+      <div ref={chatRef} className='discussion_content'>
+        {currentChat.messages.length > 0 ? (
+          currentChat.messages.map((message, index) => {
+            const _isMessageOur = message.owner === currentUser.id;
+
+            return (
+              <MessageBox
+                key={index}
+                title={
+                  _isMessageOur ? currentUser.username : chatMater.username
+                }
+                avatar={_isMessageOur ? currentUser.avatar : chatMater.avatar}
+                type={'text'}
+                position={_isMessageOur ? 'right' : 'left'}
+                text={message.text}
+                date={new Date(message.creationDate)}
+              />
+            );
+          })
+        ) : (
+          <p>Todo preloader</p>
+        )}
       </div>
       <div className='discussion_input'>
-        <Input placeholder='Chat here...' multiline={true} />
+        <Input
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') onSubmit(e);
+          }}
+          placeholder='Chat here...'
+          value={inputValue}
+        />
       </div>
     </div>
   );

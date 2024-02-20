@@ -112,13 +112,7 @@ class ChatController {
 
     const messages = chat.messages.filter((message) => message.id > messageId);
 
-    if (messages.length > 0) {
-      return res.send({ data: messages });
-    }
-
-    res.status(304);
-    res.send();
-    return;
+    return res.send({ data: messages });
   }
 
   // ? POST
@@ -235,19 +229,23 @@ class ChatController {
       return;
     }
 
-    currentChat.data.messages.push({
+    const _message = {
       id: currentChat.data.messages.length,
       text: req.body.message.trim(),
       creationDate: new Date(),
       modifyDate: null,
       owner: req.user.id,
-    });
+    };
+
+    currentChat.data.messages.push(_message);
 
     this._db.chats[currentChat.index] = currentChat.data;
 
     writeFile('./databases/chats.db.json', JSON.stringify(this._db.chats))
       .then(() => {
-        return res.send();
+        res.status(201);
+        res.send({ data: _message });
+        return;
       })
       .catch((err) => {
         res.status(500);

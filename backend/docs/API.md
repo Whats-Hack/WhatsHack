@@ -358,7 +358,18 @@
   }
   ```
 
-  no answer body
+  answer
+
+  ```json
+  <!-- status code 201 -->
+  {
+    id: currentChat.data.messages.length,
+      text: req.body.message.trim(),
+      creationDate: new Date(),
+      modifyDate: null,
+      owner: req.user.id,
+  }
+  ```
 
 - domain/api/chats/:chatId/:messageId _PATCH_
 

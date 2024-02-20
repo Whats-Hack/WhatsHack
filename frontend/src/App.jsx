@@ -66,19 +66,19 @@ function App() {
     } else {
       setTokenCheck(true);
     }
-  }, [tokenCheck]);
+  }, [tokenCheck, currentUser.token]);
 
   // try to get all chats info
   useEffect(() => {
     if (!currentUser.token) return;
 
     mainApi
-      .getUsersChatsInfo(currentUser.token)
+      .getAllChatsInfo(currentUser.token)
       .then((res) => {
         setAllChats(res.data);
       })
-      .catch((errRes) => console.error(errRes.error))
-  }, [tokenCheck]);
+      .catch((errRes) => console.error(errRes.error));
+  }, [tokenCheck, currentUser.token]);
 
   // try to get all users info // not all info, just small one part
   useEffect(() => {
@@ -89,9 +89,9 @@ function App() {
       .then((res) => {
         setAllUsers(res.data);
       })
-      .catch((errRes) => console.error(errRes.error))
-  }, [tokenCheck]);
-  
+      .catch((errRes) => console.error(errRes.error));
+  }, [tokenCheck, currentUser.token]);
+
   return (
     <>
       {tokenCheck ? (
@@ -110,7 +110,11 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <NavChats currentUser={currentUser} allChats={allChats} allUsers={allUsers} />
+                  <NavChats
+                    currentUser={currentUser}
+                    allChats={allChats}
+                    allUsers={allUsers}
+                  />
                 </WhatsHack>
               </ProtectedRoute>
             }
@@ -121,8 +125,17 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <NavChats currentUser={currentUser} allChats={allChats} allUsers={allUsers} />
-                  <Discussion />
+                  <NavChats
+                    currentUser={currentUser}
+                    allChats={allChats}
+                    allUsers={allUsers}
+                  />
+                  <Discussion
+                    currentUser={currentUser}
+                    allChats={allChats}
+                    setAllChats={setAllChats}
+                    allUsers={allUsers}
+                  />
                 </WhatsHack>
               </ProtectedRoute>
             }
