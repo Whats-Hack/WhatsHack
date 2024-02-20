@@ -57,6 +57,30 @@ class MainApi {
     );
   }
 
+  /*** register a new one user
+   * @params user = {
+   *    username: 'example password',
+   *    password: 'example password',
+   *    avatar: 'url',
+   *    email: 'example@text.com',
+   *    firstName: 'example firstName',
+   *    lastName: 'example lastName',
+   *    birthday: '2024-02-15T15:15:24.947Z',
+   *    city: 'example city'
+   * }
+   */
+  signup(user) {
+    return this._request(
+      `${this._address}/auth/register`,
+      {
+        method: 'POST',
+        headers: this._headers,
+        body: JSON.stringify(user),
+      },
+      'register a new one user',
+    );
+  }
+
   /*** send message to chat by id
    * @params message: 'example password'
    */
@@ -103,7 +127,7 @@ class MainApi {
     _headers.authorization = token;
 
     return this._request(
-      `${this._address}/user/me`,
+      `${this._address}/users/me`,
       {
         method: 'GET',
         headers: _headers,

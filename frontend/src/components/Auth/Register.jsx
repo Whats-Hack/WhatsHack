@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
+// ! modules
 import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
-export default function Register({
-  setShowLoginPage,
-  setLogged,
-  setCurrentUser,
-}) {
+// ? api
+import mainApi from '../../Api/main.api';
+
+export default function Register({ setCurrentUser }) {
+  // ? useStates
   const [errorMessage, setErrorMessage] = useState('');
 
   const [username, setUsername] = useState('');
@@ -20,12 +21,16 @@ export default function Register({
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // ? functions
+  function handleSubmit(e) {
     e.preventDefault();
+
     if (!username.length || !password.length) {
-      setErrorMessage('Username and password are required');
-    } else {
-      const userToAdd = {
+      return setErrorMessage('Username and password are required');
+    }
+
+    mainApi
+      .signup({
         username: username,
         password: password,
         firstName: firstName,
@@ -34,19 +39,18 @@ export default function Register({
         avatar: avatar,
         birthday: birthday,
         city: city,
-      };
-
-      axios.post("https://whatshack.adaptable.app/api/auth/register", userToAdd)
-        .then((result) => {
-          userToAdd.token = result.data.token
-          setCurrentUser(userToAdd);
-          setLogged(true);
-          navigate("/");
-        })
-        .catch((error) => setErrorMessage(error.response.data.error))
-    }
+      })
+      .then((res) => {
+        setCurrentUser((preState) => {
+          return { ...preState, ...{ token: res.token }, ...res.data };
+        });
+        localStorage.setItem('token', res.token);
+        navigate('/');
+      })
+      .catch((errRes) => {
+        setErrorMessage(errRes.error);
+      });
   }
-
 
   return (
     <>
@@ -54,9 +58,9 @@ export default function Register({
         <h2>Register :</h2>
         <p className='welcome_small_p'>
           Already have a account ? Click{' '}
-          <a className='welcome_a' onClick={() => setShowLoginPage(true)}>
+          <NavLink to={'/login'} className='welcome_a'>
             here
-          </a>{' '}
+          </NavLink>{' '}
           to login
         </p>
         {/* <div className="login-input-container"> */}
@@ -158,4 +162,4 @@ export default function Register({
       </div>
     </>
   );
-};
+}

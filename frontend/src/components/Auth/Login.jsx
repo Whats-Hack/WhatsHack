@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 // ! modules
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // ? utils
-import mainApi from './../Api/main.api';
+import mainApi from '../../Api/main.api';
 
-export default function Login({ setShowLoginPage, setLogged, setCurrentUser }) {
+export default function Login({ setCurrentUser }) {
+  // ? useStates
   const [errorMessage, setErrorMessage] = useState('');
 
   const [username, setUsername] = useState('');
@@ -14,37 +15,39 @@ export default function Login({ setShowLoginPage, setLogged, setCurrentUser }) {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  // ? functions
+  function handleSubmit(e) {
     e.preventDefault();
+
     if (!username.length || !password.length) {
       return setErrorMessage('Username and password are required');
     }
-    const userToLogin = {
-      username: username,
-      password: password,
-    };
 
     mainApi
-      .signin(userToLogin)
+      .signin({
+        username: username,
+        password: password,
+      })
       .then((res) => {
-        userToLogin.token = res.token;
-        setCurrentUser(userToLogin);
-        setLogged(true);
+        setCurrentUser((preState) => {
+          return { ...preState, ...{ token: res.token } };
+        });
+        localStorage.setItem('token', res.token);
         navigate('/');
       })
       .catch((errRes) => {
         setErrorMessage(errRes.error);
       });
-  };
+  }
 
   return (
     <div className='login_container'>
       <h2>Login :</h2>
       <p className='welcome_small_p'>
         You don&apos;t have a account ? Click{' '}
-        <a className='welcome_a' onClick={() => setShowLoginPage(false)}>
+        <NavLink to={'/register'} className='welcome_a'>
           here
-        </a>{' '}
+        </NavLink>{' '}
         to create one
       </p>
       <form className='welcome_form' onSubmit={handleSubmit}>

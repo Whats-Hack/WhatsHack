@@ -1,5 +1,8 @@
+// ? styles
 import './NavChats.css';
-import arrowImg from './../assets/arrow.png';
+
+// ? assets
+import arrowImg from './../../assets/arrow.png';
 
 export default function NavChats() {
   return (

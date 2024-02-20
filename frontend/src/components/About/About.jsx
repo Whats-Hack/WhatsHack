@@ -1,8 +1,8 @@
 // ? assets
-import gitRepositoryLogo from './../assets/git-repository.png';
-import gitLogo from './../assets/github.png';
-import reactLogo from './../assets/react.png';
-import apiLogo from './../assets/rest-api-icon.png';
+import gitRepositoryLogo from './../../assets/git-repository.png';
+import gitLogo from './../../assets/github.png';
+import reactLogo from './../../assets/react.png';
+import apiLogo from './../../assets/rest-api-icon.png';
 
 // ? styles
 import './About.css';

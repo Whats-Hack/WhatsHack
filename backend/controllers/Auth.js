@@ -80,7 +80,6 @@ class Auth {
       email: email || null,
       avatar: avatar || null,
       username: username,
-      password: password,
       firstName: firstName || null,
       lastName: lastName || null,
       birthday: birthday || null,

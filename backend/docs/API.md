@@ -73,7 +73,6 @@
     "data": {
       "id": "id", // uniq // don't be a changeably
       "creationDate": "2024-02-15T15:15:24.947Z", // type is a date
-      "token": "some token", // id: iehbvpehwifbvpehf -> 12345
       "lastConnection": "2024-02-15T15:15:24.947Z", // type is a date
       "friends": [],
       "chats": [],
@@ -81,8 +80,7 @@
 
       "email": "example@text.com",
       "avatar": "url",
-      "username": "example", // required
-      "password": "example pass", // required
+      "username": "example",
       "firstName": "example firstName",
       "lastName": "example lastName",
       "birthday": "2024-02-15T15:15:24.947Z", // type is a date

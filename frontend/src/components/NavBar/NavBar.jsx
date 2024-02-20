@@ -1,31 +1,39 @@
+/* eslint-disable react/prop-types */
 // ! modules
 import { Link } from 'react-router-dom';
 
 // ? assets
-import chatImg from './../assets/chat.png';
-import addUserImg from './../assets/add-user.png';
-import about from './../assets/about.png';
-import param from './../assets/param.png';
-import logout from './../assets/logout.png';
+import chatImg from './../../assets/chat.png';
+import addUserImg from './../../assets/add-user.png';
+import about from './../../assets/about.png';
+import param from './../../assets/param.png';
+import logout from './../../assets/logout.png';
 
 // ? styles
 import './NavBar.css';
 
-export default function NavBar({ setLogged, setCurrentUser }) {
+export default function NavBar({ setCurrentUser }) {
   function logoutUser() {
     setCurrentUser({
-      email: '',
-      avatar: '',
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      birthday: '',
-      city: '',
+      token: null,
+      id: null, // number
+      creationDate: null, // date
+      lastConnection: null, // date
+      friends: [],
+      chats: [],
+      email: null,
+      avatar: null, // url
+      username: null,
+      password: null,
+      firstName: null,
+      lastName: null,
+      birthday: null, // date
+      city: null,
+      isActive: false,
     });
-
-    setLogged(false);
+    localStorage.clear();
   }
+
   return (
     <div className='navbar_container'>
       <Link to={'/chat'}>
