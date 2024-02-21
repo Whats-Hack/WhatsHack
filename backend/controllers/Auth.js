@@ -97,6 +97,7 @@ class Auth {
       email: email || null,
       avatar: avatar || null,
       username: username,
+      password: password,
       firstName: firstName || null,
       lastName: lastName || null,
       birthday: birthday || null,
@@ -119,6 +120,8 @@ class Auth {
         res.status(500);
         return res.send({ error: error });
       }
+
+      delete password.password;
 
       res.status(201);
       res.send({

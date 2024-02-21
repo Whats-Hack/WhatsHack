@@ -106,6 +106,23 @@ class MainApi {
     );
   }
 
+  /*** create a new one chat with user by id
+   * @params userId: 255,
+   */
+  createOneChatByUserId(token, userId) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/chats`,
+      {
+        method: 'POST',
+        headers: _headers,
+        body: JSON.stringify({ userId: userId }),
+      },
+      `create a new one chat with user ${userId}`,
+    );
+  }
+
   // ? PUT
   addOneUserToFriendsById(token, userId) {
     const _headers = this._headers;

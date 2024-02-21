@@ -22,7 +22,7 @@ routerChats.get(
 
 // ? POST
 
-// send message
+// create a new one chat
 routerChats.post('/', chatController.createChat);
 
 // send message

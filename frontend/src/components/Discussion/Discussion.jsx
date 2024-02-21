@@ -199,7 +199,7 @@ export default function Discussion({
             );
           })
         ) : (
-          <p>Todo preloader</p>
+          <p>Todo logotype</p>
         )}
       </div>
       <div className='discussion_input'>

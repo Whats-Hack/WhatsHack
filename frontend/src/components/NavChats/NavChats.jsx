@@ -79,10 +79,10 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
                 />
                 <div className='navchats_text_container'>
                   <p className='navchats_name'>{chatMater.username}</p>
-                  <p className='navchats_text'>{_message.text}</p>
+                  <p className='navchats_text'>{_message?.text}</p>
                 </div>
                 <p className='navchats_time'>
-                  {new Date(_message.creationDate).toLocaleTimeString()}
+                  {new Date(_message?.creationDate).toLocaleTimeString()}
                 </p>
               </Link>
             );

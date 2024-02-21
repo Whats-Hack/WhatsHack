@@ -176,7 +176,12 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <UsersList currentUser={currentUser} allUsers={allUsers} />
+                  <UsersList
+                    currentUser={currentUser}
+                    allUsers={allUsers}
+                    allChats={allChats}
+                    setAllChats={setAllChats}
+                  />
                 </WhatsHack>
               </ProtectedRoute>
             }
@@ -187,7 +192,12 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <UsersList currentUser={currentUser} allUsers={allUsers} />
+                  <UsersList
+                    currentUser={currentUser}
+                    allUsers={allUsers}
+                    allChats={allChats}
+                    setAllChats={setAllChats}
+                  />
                   <UserDetails
                     downloadedUsersId={downloadedUsersId}
                     setDownloadedUsersId={setDownloadedUsersId}

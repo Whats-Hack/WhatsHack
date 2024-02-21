@@ -63,14 +63,20 @@ class ChatController {
 
   // return all users chats
   getAllChats(req, res, next) {
-    const chats = req.user.chats.map((chatId) => {
+    const user = { ...userController._findUserById(req.user.id) };
+
+    const chats = user.data.chats.map((chatId) => {
       const _chat = { ...this._findChatById(chatId).data };
 
-      const _message = _chat.messages[_chat.messages.length - 1];
+      const _message =
+        _chat.messages.length > 0
+          ? _chat.messages[_chat.messages.length - 1]
+          : undefined;
 
-      delete _chat.messages;
-
-      _chat.messages = [_message];
+      if (_chat.messages.length > 0) {
+        delete _chat.messages;
+        _chat.messages = [_message];
+      }
 
       return _chat;
     });
@@ -84,8 +90,10 @@ class ChatController {
   getChatById(req, res, next) {
     const chatId = Number(req.params.chatId);
 
+    const user = { ...userController._findUserById(req.user.id) };
+
     // valid
-    if (!req.user.chats.includes(chatId)) {
+    if (!user.data.chats.includes(chatId)) {
       res.status(403);
       res.send({ error: "You don't have permission" });
       return;
@@ -101,8 +109,10 @@ class ChatController {
     const chatId = Number(req.params.chatId);
     const messageId = Number(req.params.messageId);
 
+    const user = { ...userController._findUserById(req.user.id) };
+
     // valid
-    if (!req.user.chats.includes(chatId)) {
+    if (!user.data.chats.includes(chatId)) {
       res.status(403);
       res.send({ error: "You don't have permission" });
       return;
@@ -119,7 +129,7 @@ class ChatController {
 
   // create a new chat
   async createChat(req, res, next) {
-    const { userId, message } = req.body;
+    const { userId } = req.body;
     const _user = userController._findUserById(userId);
 
     // valid
@@ -160,17 +170,6 @@ class ChatController {
       messages: [],
     };
 
-    // if message isn't empty
-    if (message) {
-      newChat.messages.push({
-        id: 0,
-        text: message,
-        creationDate: new Date(),
-        modifyDate: null,
-        owner: req.user.id,
-      });
-    }
-
     const backupChats = JSON.stringify(this._db.chats);
     const backupUsers = JSON.stringify(this._db.users);
 
@@ -206,8 +205,10 @@ class ChatController {
   sendMessage(req, res, next) {
     const chatId = Number(req.params.chatId);
 
+    const user = { ...userController._findUserById(req.user.id) };
+
     // permission
-    if (!req.user.chats.includes(chatId)) {
+    if (!user.data.chats.includes(chatId)) {
       res.status(403);
       res.send({ error: "You don't have permission" });
       return;
@@ -260,8 +261,10 @@ class ChatController {
     const chatId = Number(req.params.chatId);
     const messageId = Number(req.params.messageId);
 
+    const user = { ...userController._findUserById(req.user.id) };
+
     // permission
-    if (!req.user.chats.includes(chatId)) {
+    if (!user.data.chats.includes(chatId)) {
       res.status(403);
       res.send({ error: "You don't have permission" });
       return;
