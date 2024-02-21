@@ -2,6 +2,7 @@
 
 // ? utils
 const { DB } = require('./../utils/constants');
+const { writeFile } = require('./../utils/db');
 
 class UserController {
   constructor({ db }) {
@@ -11,6 +12,7 @@ class UserController {
     this.getUserById = this.getUserById.bind(this);
     this._findUserById = this._findUserById.bind(this);
     this.getUserByToken = this.getUserByToken.bind(this);
+    this.addOneUserToFriendsById = this.addOneUserToFriendsById.bind(this);
   }
 
   /*** find user by id
@@ -27,6 +29,8 @@ class UserController {
     }
     return null;
   }
+
+  // ? GET
 
   // get current user info
   getUserByToken(req, res, next) {
@@ -127,12 +131,56 @@ class UserController {
     // if they are friends -> add info about lastConnection
     if (
       _user.data.friends.includes(req.user.id) ||
-      _user.data.id === req.user.id
+      _user.data.id == req.user.id
     ) {
-      userSend.lastConnection = _user.lastConnection;
+      userSend.lastConnection = _user.data.lastConnection;
     }
 
     return res.send({ data: userSend });
+  }
+
+  // ? PUT
+
+  // add some user to your friends
+  addOneUserToFriendsById(req, res, next) {
+    const { userId } = req.params;
+
+    const _userById = this._findUserById(userId);
+
+    // valid
+    if (!_userById) {
+      res.status(404);
+      res.send({ error: 'User not found' });
+      return;
+    }
+
+    // valid
+    if (req.user.id == userId) {
+      res.status(400);
+      res.send({ error: 'Can not add yourself to friend' });
+      return;
+    }
+
+    // if not active
+    if (!_userById.data.isActive) {
+      res.status(410);
+      res.send({ error: 'User deleted his account :(' });
+      return;
+    }
+
+    const _currentUser = this._findUserById(req.user.id);
+
+    if (_currentUser.data.friends.includes(Number(userId))) {
+      res.status(403);
+      res.send({ error: 'User are already your friend' });
+      return;
+    }
+
+    _currentUser.data.friends.push(Number(userId));
+
+    writeFile('./databases/users.db.json', JSON.stringify(this._db));
+
+    res.send();
   }
 }
 

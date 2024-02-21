@@ -106,6 +106,20 @@ class MainApi {
     );
   }
 
+  // ? PUT
+  addOneUserToFriendsById(token, userId) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/users/${userId}`,
+      {
+        method: 'PUT',
+        headers: _headers,
+      },
+      `add user [${userId}] to friend`,
+    );
+  }
+
   // ? PATCH
 
   /*** send message to chat by id

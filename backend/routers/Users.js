@@ -17,4 +17,9 @@ routerUsers.get('/me', userController.getUserByToken);
 // get just 1 user
 routerUsers.get('/:userId', userController.getUserById);
 
+// ? PUT
+
+// add someone to your friend
+routerUsers.put('/:userId', userController.addOneUserToFriendsById);
+
 module.exports = routerUsers;
