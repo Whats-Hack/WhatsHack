@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // ! modules
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // ? styles
 import './UsersList.css';
@@ -8,10 +8,10 @@ import './UsersList.css';
 // ? assets
 import arrowImg from './../../assets/arrow.png';
 import defaultIcon from './../../assets/default_avatar.png';
+import chatImg from './../../assets/chat.png';
+import addUser from './../../assets/add-user.png';
 
 export default function UsersList({ currentUser, allUsers }) {
-  console.log('deb', allUsers);
-
   return (
     <>
       <input type='checkbox' id='toggleButton' />
@@ -24,9 +24,10 @@ export default function UsersList({ currentUser, allUsers }) {
         </div>
         <div className='userslist_container_limited'>
           {allUsers.map((user, index) => {
+            if (user.id === currentUser.id) return;
             return (
               <div key={index} className='userslist_user_container'>
-                <NavLink
+                <Link
                   to={`/users/${user.id}`}
                   key={index}
                   className='userslist_user_info_container'
@@ -39,21 +40,19 @@ export default function UsersList({ currentUser, allUsers }) {
                   <div className='userslist_text_container'>
                     <p className='userslist_name'>{user.username}</p>
                   </div>
-                </NavLink>
-                <div className='userslist_button_container'>
+                </Link>
+                <div className='userslist_img_container'>
                   <Link
                     to={'/'}
-                    className='userslist_button'
-                    id='userslist_button_chat'
+                    className='userslist_img_box'
                   >
-                    Open chat
+                    <img className="userslist_img" src={chatImg} alt="Chat logo" />
                   </Link>
                   <Link
                     to={'/'}
-                    className='userslist_button'
-                    id='userslist_button_add'
+                    className='userslist_img_box'
                   >
-                    Add friend
+                    <img className="userslist_img" src={addUser} alt="Add user logo" />
                   </Link>
                 </div>
               </div>

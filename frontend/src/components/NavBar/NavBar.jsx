@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // ! modules
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 // ? assets
 import chatImg from './../../assets/chat.png';
@@ -36,29 +36,29 @@ export default function NavBar({ setCurrentUser }) {
 
   return (
     <div className='navbar_container'>
-      <Link to={'/chat'}>
-        <div className='navbar_image_container'>
+      <NavLink to={'/chat'} className='navbar_image_container'>
+        <div>
           <img className='navbar_image' src={chatImg} alt='ChatImg' />
         </div>
-      </Link>
+      </NavLink>
 
-      <Link to={'/users'}>
-        <div className='navbar_image_container'>
+      <NavLink to={'/users'} className='navbar_image_container'>
+        <div>
           <img className='navbar_image' src={addUserImg} alt='ChatImg' />
         </div>
-      </Link>
+      </NavLink>
 
-      <Link to={'/settings'}>
-        <div className='navbar_image_container'>
+      <NavLink to={'/settings'} className='navbar_image_container'>
+        <div>
           <img className='navbar_image' src={param} alt='ChatImg' />
         </div>
-      </Link>
+      </NavLink>
 
-      <Link to={'/about'}>
-        <div className='navbar_image_container'>
+      <NavLink to={'/about'} className='navbar_image_container'>
+        <div>
           <img className='navbar_image' src={about} alt='ChatImg' />
         </div>
-      </Link>
+      </NavLink>
 
       <div className='navbar_image_container logout_image' onClick={logoutUser}>
         <img className='navbar_image' src={logout} alt='ChatImg' />

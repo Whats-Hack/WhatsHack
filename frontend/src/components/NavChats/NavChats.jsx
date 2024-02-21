@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 // ! modules
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // ? styles
 import './NavChats.css';
@@ -67,7 +67,7 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
             }
 
             return (
-              <NavLink
+              <Link
                 to={`/chat/${chat.id}`}
                 key={index}
                 className='navchats_chat_container'
@@ -84,7 +84,7 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
                 <p className='navchats_time'>
                   {new Date(_message.creationDate).toLocaleTimeString()}
                 </p>
-              </NavLink>
+              </Link>
             );
           })}
         </div>

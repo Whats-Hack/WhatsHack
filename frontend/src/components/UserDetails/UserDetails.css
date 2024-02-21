@@ -1,0 +1,67 @@
+.userdetails_container {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 0;
+}
+
+.userdetails_header {
+    width: 100%;
+    min-height: 32px;
+    text-align: center;
+    padding: 0.7rem 0;
+    background: linear-gradient(0deg, rgb(245, 245, 245) 0%, rgb(213, 236, 255) 30%, rgb(171, 216, 255) 100%);
+}
+
+.userdetails_h2 {
+    margin: 0;
+}
+
+.userdetails_content {
+    padding: 2rem;
+    overflow-y: auto;
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+    height: 100%;
+    padding-top: 3rem;
+}
+
+.userdetails_img_content {
+    height: 300px;
+    
+    padding-right: 2rem;
+}
+
+.userdetails_img {
+    height: 100%;
+    box-shadow: 0px 27px 34px -21px rgba(0,0,0,1);
+    border-radius: 50%;
+}
+
+.userdetails_text_content {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: center;
+}
+
+.userdetails_text {
+    margin: 10px 0;
+}
+
+@media screen and (max-width: 768px) {
+    .userdetails_container {
+        position: fixed;
+        top: 65px;
+        height: 93vh;
+        overflow-y: auto;
+        width: 100%;
+    }
+}
