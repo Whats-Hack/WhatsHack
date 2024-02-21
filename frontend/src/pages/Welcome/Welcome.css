@@ -6,7 +6,6 @@
 }
 
 .welcome_h1 {
-  margin-top: 10vh;
   font-size: 3.75em;
 }
 
@@ -161,4 +160,16 @@
 .welcome_error {
   font-size: 0.9rem;
   color: red;
+}
+
+.container_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_header_img {
+  height: 120px;
+  margin-top: 5vh;
 }

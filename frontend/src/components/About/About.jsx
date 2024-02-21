@@ -3,6 +3,7 @@ import gitRepositoryLogo from './../../assets/git-repository.png';
 import gitLogo from './../../assets/github.png';
 import reactLogo from './../../assets/react.png';
 import apiLogo from './../../assets/rest-api-icon.png';
+import svgLogo from '../../assets/whatshack.svg';
 
 // ? styles
 import './About.css';
@@ -10,6 +11,7 @@ import './About.css';
 export default function About() {
   return (
     <div className='about_container'>
+      <img className='about_logo' src={svgLogo} alt="WhatsHack logo" />
       <h1 className='about_h1'>WhatsHack</h1>
       <p className='about_p'>
         WhatsHack is a web application developed by Hugo and Dima as part of
