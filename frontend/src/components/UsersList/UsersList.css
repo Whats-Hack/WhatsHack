@@ -78,7 +78,7 @@
   font-size: 1.2rem;
 }
 
-.userslist_button_container {
+.userslist_img_container {
   display: flex;
   flex-direction: column;
   margin: 0 0 0 auto;
@@ -87,38 +87,26 @@
   text-align: center;
 }
 
-.userslist_button {
-  margin-left: auto;
-  border: 0;
-  font-size: 1rem;
-  border-radius: 1rem;
-  font-weight: 700;
-  width: 100px;
-  padding: 5px 10px;
+.userslist_img_box {
+  height: 35px;
+  padding: 5px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15);
+  transition: 0.3s;
+  margin: 3px 0;
+  border-radius: 0.5rem;
+  background-color: rgb(247, 247, 247);
+  box-sizing: border-box;
+}
+
+.userslist_img {
+  height: 100%;
   transition: 0.4s;
 }
 
-.userslist_button:hover {
-  cursor: pointer;
+.userslist_img_box:hover {
+  transform: scale(0.92);
 }
 
-#userslist_button_add {
-  background: cyan;
-}
-
-#userslist_button_add:hover {
-  background: rgb(88, 219, 219);
-}
-
-#userslist_button_chat {
-  background: rgb(88, 209, 88);
-  margin-bottom: 10px;
-}
-
-#userslist_button_chat:hover {
-  background: rgb(90, 182, 90)
-}
 
 #toggleButton {
   display: none;

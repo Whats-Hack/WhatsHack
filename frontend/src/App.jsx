@@ -17,6 +17,7 @@ import NavChats from './components/NavChats/NavChats';
 import Settings from './components/Settings/Settings';
 import UsersList from './components/UsersList/UsersList';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserDetails from './components/UserDetails/UserDetails';
 
 import mainApi from './Api/main.api';
 
@@ -189,6 +190,7 @@ function App() {
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
                   <UsersList currentUser={currentUser} allUsers={allUsers} />
+                  <UserDetails currentUser={currentUser} />
                 </WhatsHack>
               </ProtectedRoute>
             }
