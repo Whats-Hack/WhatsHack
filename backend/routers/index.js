@@ -5,6 +5,7 @@ const router = require('express').Router();
 
 // ? middlewares
 const auth = require('./../middlewares/Auth');
+const lastTimeOnline = require('./../middlewares/LastTimeOnline');
 
 // ? routers
 const routerAuth = require('./Auth');
@@ -18,10 +19,20 @@ router.use('/api/auth', routerAuth);
 // protected routers
 
 // Users
-router.use('/api/users', auth.isUserAuthorized, routerUsers);
+router.use(
+  '/api/users',
+  auth.isUserAuthorized,
+  lastTimeOnline.updateTime,
+  routerUsers,
+);
 
 // Chats
-router.use('/api/chats', auth.isUserAuthorized, routerChats);
+router.use(
+  '/api/chats',
+  auth.isUserAuthorized,
+  lastTimeOnline.updateTime,
+  routerChats,
+);
 
 // ? 404
 router.use(routerNotFound);

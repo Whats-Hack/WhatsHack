@@ -8,6 +8,7 @@ class UserController {
   constructor({ db }) {
     this._db = db;
 
+    this._saveDB = this._saveDB.bind(this);
     this.getAllUsers = this.getAllUsers.bind(this);
     this.getUserById = this.getUserById.bind(this);
     this._findUserById = this._findUserById.bind(this);
@@ -28,6 +29,10 @@ class UserController {
       }
     }
     return null;
+  }
+
+  _saveDB() {
+    writeFile('./databases/users.db.json', JSON.stringify(this._db));
   }
 
   // ? GET
@@ -178,7 +183,7 @@ class UserController {
 
     _currentUser.data.friends.push(Number(userId));
 
-    writeFile('./databases/users.db.json', JSON.stringify(this._db));
+    this._saveDB();
 
     res.send();
   }
