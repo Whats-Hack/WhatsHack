@@ -185,6 +185,48 @@
   }
   ```
 
+- domain/api/users/:userId _PUT_
+
+  params
+
+  ```json
+    userId: 0 // id of user that u want to add to friend
+  ```
+
+  answer
+
+  ```json
+    <!-- status code 200 -->
+  ```
+
+  ```json
+  {
+    <!-- status code 410 -->
+    "error": "User deleted his account :("
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 404 -->
+    "error": "User not found"
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 403 -->
+    "error": "User are already your friend"
+  }
+  ```
+
+  ```json
+  {
+    <!-- status code 400 -->
+    "error": "Can not add yourself to friend"
+  }
+  ```
+
 ---
 
 ### chats
@@ -363,11 +405,11 @@
   ```json
   <!-- status code 201 -->
   {
-    id: currentChat.data.messages.length,
-      text: req.body.message.trim(),
-      creationDate: new Date(),
-      modifyDate: null,
-      owner: req.user.id,
+    "id": 2,
+    "text": "example text",
+    "creationDate": "2024-02-19T16:53:53.189Z",
+    "modifyDate": null,
+    "owner": 1
   }
   ```
 
@@ -392,7 +434,7 @@
 
 ---
 
-#### soon
+### soon
 
 - domain/api/chats/:chatId/:messageId _DELETE_
 
