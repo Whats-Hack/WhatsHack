@@ -10,22 +10,26 @@ import WhatsHack from './pages/WhatsHack/WhatsHack';
 
 // ? components
 import About from './components/About/About';
-import Discussion from './components/Discussion/Discussion';
-import NavChats from './components/NavChats/NavChats';
-import Setting from './components/Settings/Settings';
-
-import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import Discussion from './components/Discussion/Discussion';
+import NavChats from './components/NavChats/NavChats';
 import Settings from './components/Settings/Settings';
 import UsersList from './components/UsersList/UsersList';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import mainApi from './Api/main.api';
 
 function App() {
   // ? useStates
   // do we check token in local storage
-  const [tokenCheck, setTokenCheck] = useState(false);
+  const [isTokenCheck, setTokenCheck] = useState(false);
+  // is Chats Downloaded
+  const [isChatsDataDownloaded, setChatsDataDownloaded] = useState(false);
+  // is Users Downloaded
+  const [isUsersDataDownloaded, setUsersDataDownloaded] = useState(false);
+  //
+  const [isAllInfoChecked, setAllInfoChecked] = useState(false);
   // all info about user
   const [currentUser, setCurrentUser] = useState({
     token: null,
@@ -48,6 +52,8 @@ function App() {
   const [allChats, setAllChats] = useState([]);
   // all users
   const [allUsers, setAllUsers] = useState([]);
+  // downloaded chats id
+  const [downloadedChatsId, setDownloadedChatsId] = useState([]);
 
   // ? useEffects
 
@@ -70,7 +76,7 @@ function App() {
     } else {
       setTokenCheck(true);
     }
-  }, [tokenCheck, currentUser.token]);
+  }, [isTokenCheck, currentUser.token]);
 
   // try to get all chats info
   useEffect(() => {
@@ -81,8 +87,11 @@ function App() {
       .then((res) => {
         setAllChats(res.data);
       })
-      .catch((errRes) => console.error(errRes.error));
-  }, [tokenCheck, currentUser.token]);
+      .catch((errRes) => console.error(errRes.error))
+      .finally(() => {
+        setChatsDataDownloaded(true);
+      });
+  }, [isTokenCheck, currentUser.token]);
 
   // try to get all users info // not all info, just small one part
   useEffect(() => {
@@ -93,12 +102,22 @@ function App() {
       .then((res) => {
         setAllUsers(res.data);
       })
-      .catch((errRes) => console.error(errRes.error));
-  }, [tokenCheck, currentUser.token]);
+      .catch((errRes) => console.error(errRes.error))
+      .finally(() => {
+        setUsersDataDownloaded(true);
+      });
+  }, [isTokenCheck, currentUser.token]);
+
+  //
+  useEffect(() => {
+    setAllInfoChecked(
+      isUsersDataDownloaded && isChatsDataDownloaded && isTokenCheck,
+    );
+  }, [isUsersDataDownloaded, isUsersDataDownloaded, isTokenCheck]);
 
   return (
     <>
-      {tokenCheck ? (
+      {isAllInfoChecked ? (
         <Routes>
           <Route
             path='/'
@@ -123,7 +142,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          
+
           <Route
             path='/chat/:chatId'
             element={
@@ -135,6 +154,8 @@ function App() {
                     allUsers={allUsers}
                   />
                   <Discussion
+                    downloadedChatsId={downloadedChatsId}
+                    setDownloadedChatsId={setDownloadedChatsId}
                     currentUser={currentUser}
                     allChats={allChats}
                     setAllChats={setAllChats}

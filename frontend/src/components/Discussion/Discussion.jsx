@@ -18,6 +18,8 @@ import defaultIcon from './../../assets/default_avatar.png';
 import { TIMER_REFRESH } from '../../utils/constants';
 
 export default function Discussion({
+  downloadedChatsId,
+  setDownloadedChatsId,
   currentUser,
   allChats,
   setAllChats,
@@ -86,9 +88,31 @@ export default function Discussion({
       const _chat = allChats[i];
       if (String(_chat.id) === String(chatId)) {
         setCurrentChat(_chat);
+
+        if (!downloadedChatsId.includes(_chat.id)) {
+          // download all messages if open chat first time
+          mainApi
+            .getOneChatInfoById(currentUser.token, _chat.id)
+            .then((res) => {
+              setAllChats((preState) => {
+                for (let i = 0; i < preState.length; i++) {
+                  const _chat = preState[i];
+                  if (String(_chat.id) === String(chatId)) {
+                    _chat.messages = res.data.messages;
+                  }
+                }
+                return preState;
+              });
+              setCurrentChat(res.data);
+              setDownloadedChatsId((preState) => [...preState, _chat.id]);
+            })
+            .catch((errRes) => console.error(errRes.error));
+        }
+
+        break;
       }
     }
-  }, [allChats, chatId]);
+  }, [chatId]);
 
   // find a chatMater
   useEffect(() => {
@@ -109,25 +133,6 @@ export default function Discussion({
     }
   }, [allUsers, currentChat, currentUser.id]);
 
-  // init messages
-  useEffect(() => {
-    if (typeof currentChat.id !== 'number') return;
-
-    mainApi
-      .getOneChatInfoById(currentUser.token, currentChat.id)
-      .then((res) => {
-        setAllChats((preState) => {
-          for (let i = 0; i < preState.length; i++) {
-            const _chat = preState[i];
-            _chat.messages = res.data.messages;
-          }
-          return preState;
-        });
-        setCurrentChat(res.data);
-      })
-      .catch((errRes) => console.error(errRes.error));
-  }, [currentChat.id, currentUser.token, setAllChats]);
-
   // check messages per tick
   useEffect(() => {
     if (typeof currentChat.id !== 'number') return;
@@ -140,15 +145,16 @@ export default function Discussion({
           currentChat.messages[currentChat.messages.length - 1].id,
         )
         .then((res) => {
-          setAllChats((preState) => {
-            for (let i = 0; i < preState.length; i++) {
-              const _chat = preState[i];
-              if (_chat.id === chatId) {
-                _chat.messages = [..._chat.messages, ...res.data];
-              }
+          const _preStateAllChats = [...allChats];
+
+          for (let i = 0; i < _preStateAllChats.length; i++) {
+            const _chat = _preStateAllChats[i];
+            if (String(_chat.id) === String(chatId)) {
+              _chat.messages = [..._chat.messages, ...res.data];
             }
-            return preState;
-          });
+          }
+
+          setAllChats(_preStateAllChats);
 
           const _preState = { ...currentChat };
           _preState.messages = [..._preState.messages, ...res.data];
@@ -161,14 +167,7 @@ export default function Discussion({
     return () => {
       clearInterval(_interval);
     };
-  }, [
-    chatId,
-    currentChat,
-    currentChat.id,
-    currentChat.messages,
-    currentUser.token,
-    setAllChats,
-  ]);
+  }, [currentChat]);
 
   return (
     <div className='discussion_container'>

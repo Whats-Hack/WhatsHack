@@ -10,9 +10,7 @@ import arrowImg from './../../assets/arrow.png';
 import defaultIcon from './../../assets/default_avatar.png';
 
 export default function UsersList({ currentUser, allUsers }) {
-
-  console.log('deb', allUsers)
-
+  console.log('deb', allUsers);
 
   return (
     <>
@@ -25,33 +23,42 @@ export default function UsersList({ currentUser, allUsers }) {
           <h2 className='userslist_h2'>Users List</h2>
         </div>
         <div className='userslist_container_limited'>
-          {
-            allUsers.map((user, index) => {
-              return (
-                <div className='userslist_user_container'>
-                  <NavLink
-                    to={`/user/${user.id}`}
-                    key={index}
-                    className='userslist_user_info_container'
+          {allUsers.map((user, index) => {
+            return (
+              <div key={index} className='userslist_user_container'>
+                <NavLink
+                  to={`/user/${user.id}`}
+                  key={index}
+                  className='userslist_user_info_container'
+                >
+                  <img
+                    className='userslist_avatar'
+                    src={user.avatar || defaultIcon}
+                    alt={`avatar of ${user.username}`}
+                  />
+                  <div className='userslist_text_container'>
+                    <p className='userslist_name'>{user.username}</p>
+                  </div>
+                </NavLink>
+                <div className='userslist_button_container'>
+                  <Link
+                    to={'/'}
+                    className='userslist_button'
+                    id='userslist_button_chat'
                   >
-                    <img
-                      className='userslist_avatar'
-                      src={user.avatar || defaultIcon}
-                      alt={`avatar of ${user.username}`}
-                    />
-                    <div className='userslist_text_container'>
-                      <p className='userslist_name'>{user.username}</p>
-                    </div>
-                    </NavLink>
-                    <div className='userslist_button_container'>
-                      <Link to={'/'} className='userslist_button' id='userslist_button_chat'>Open chat</Link>
-                      <Link to={'/'} className='userslist_button' id='userslist_button_add'>Add friend</Link>
-                    </div>
-                  
+                    Open chat
+                  </Link>
+                  <Link
+                    to={'/'}
+                    className='userslist_button'
+                    id='userslist_button_add'
+                  >
+                    Add friend
+                  </Link>
                 </div>
-              )
-            })
-          }
+              </div>
+            );
+          })}
         </div>
       </div>
     </>
