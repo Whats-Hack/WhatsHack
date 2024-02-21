@@ -55,6 +55,8 @@ function App() {
   const [allUsers, setAllUsers] = useState([]);
   // downloaded chats id
   const [downloadedChatsId, setDownloadedChatsId] = useState([]);
+  // downloaded users id
+  const [downloadedUsersId, setDownloadedUsersId] = useState([]);
 
   // ? useEffects
 
@@ -76,15 +78,14 @@ function App() {
         });
     } else {
       setTokenCheck(true);
+      setChatsDataDownloaded(true);
+      setUsersDataDownloaded(true);
     }
   }, [isTokenCheck, currentUser.token]);
 
   // try to get all chats info
   useEffect(() => {
-    if (!currentUser.token) {
-      setChatsDataDownloaded(true);
-      return;
-    }
+    if (!currentUser.token) return;
 
     mainApi
       .getAllChatsInfo(currentUser.token)
@@ -99,10 +100,7 @@ function App() {
 
   // try to get all users info // not all info, just small one part
   useEffect(() => {
-    if (!currentUser.token) {
-      setUsersDataDownloaded(true);
-      return;
-    }
+    if (!currentUser.token) return;
 
     mainApi
       .getAllUsersInfo(currentUser.token)
@@ -120,7 +118,7 @@ function App() {
     setAllInfoChecked(
       isUsersDataDownloaded && isChatsDataDownloaded && isTokenCheck,
     );
-  }, [isUsersDataDownloaded, isUsersDataDownloaded, isTokenCheck]);
+  }, [isUsersDataDownloaded, isChatsDataDownloaded, isTokenCheck]);
 
   return (
     <>
@@ -190,7 +188,13 @@ function App() {
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
                   <UsersList currentUser={currentUser} allUsers={allUsers} />
-                  <UserDetails currentUser={currentUser} />
+                  <UserDetails
+                    downloadedUsersId={downloadedUsersId}
+                    setDownloadedUsersId={setDownloadedUsersId}
+                    currentUser={currentUser}
+                    allUsers={allUsers}
+                    setAllUsers={setAllUsers}
+                  />
                 </WhatsHack>
               </ProtectedRoute>
             }

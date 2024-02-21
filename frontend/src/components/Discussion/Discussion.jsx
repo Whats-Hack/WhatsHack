@@ -106,7 +106,12 @@ export default function Discussion({
               setCurrentChat(res.data);
               setDownloadedChatsId((preState) => [...preState, _chat.id]);
             })
-            .catch((errRes) => console.error(errRes.error));
+            .catch((errRes) => console.error(errRes.error))
+            .finally(() => {
+              setTimeout(() => {
+                chatRef.current.scrollTop = chatRef.current.scrollHeight;
+              }, 10);
+            });
         }
 
         break;
