@@ -1,6 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   font-synthesis: none;
@@ -37,4 +37,9 @@ button {
   .navchats_container {
     height: 100%;
   }
+}
+
+a, a:link, a:visited, a:focus, a:hover, a:active{
+  color: inherit;
+  text-decoration: inherit;
 }

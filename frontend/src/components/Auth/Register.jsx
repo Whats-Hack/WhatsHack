@@ -63,7 +63,6 @@ export default function Register({ setCurrentUser }) {
           </NavLink>{' '}
           to login
         </p>
-        {/* <div className="login-input-container"> */}
         <form className='welcome_form' onSubmit={handleSubmit}>
           <div className='welcome_form_inputs'>
             <div className='welcome_form_input'>
@@ -157,8 +156,7 @@ export default function Register({ setCurrentUser }) {
             </button>
           </div>
         </form>
-        {/* </div> */}
-        <p className='welcome_error'>{errorMessage}</p>
+        <p className='setting_error'>{errorMessage}</p>
       </div>
     </>
   );

@@ -12,10 +12,14 @@ import WhatsHack from './pages/WhatsHack/WhatsHack';
 import About from './components/About/About';
 import Discussion from './components/Discussion/Discussion';
 import NavChats from './components/NavChats/NavChats';
+import Setting from './components/Settings/Settings';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import Settings from './components/Settings/Settings';
+import UsersList from './components/UsersList/UsersList';
+
 import mainApi from './Api/main.api';
 
 function App() {
@@ -119,7 +123,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          
           <Route
             path='/chat/:chatId'
             element={
@@ -136,6 +140,28 @@ function App() {
                     setAllChats={setAllChats}
                     allUsers={allUsers}
                   />
+                </WhatsHack>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/userslist'
+            element={
+              <ProtectedRoute isActive={currentUser.token}>
+                <WhatsHack setCurrentUser={setCurrentUser}>
+                  <UsersList currentUser={currentUser} allUsers={allUsers} />
+                </WhatsHack>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/settings'
+            element={
+              <ProtectedRoute isActive={currentUser.token}>
+                <WhatsHack setCurrentUser={setCurrentUser}>
+                  <Settings currentUser={currentUser} />
                 </WhatsHack>
               </ProtectedRoute>
             }

@@ -1,0 +1,104 @@
+.setting_container {
+  width: 80%;
+  max-width: 1400px;
+  margin: 2rem auto auto;
+  background-color: rgb(238, 238, 238);
+  border-radius: 2rem;
+  text-align: center;
+  padding: 2rem 5rem;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.setting_h1 {
+  margin-top: 0vh;
+  font-size: 2.8em;
+}
+
+.setting_form {
+  display: flex;
+  flex-direction: column;
+  margin: 4vh auto 0 auto;
+  max-width: 40rem;
+  min-width: 19rem;
+}
+
+.setting_form_inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.setting_form_input {
+  display: flex;
+  width: 17.8rem;
+  justify-content: end;
+}
+
+.setting_input {
+  width: 9rem;
+  height: 1.6rem;
+  border-radius: 0.75rem;
+  border: 0;
+  color: #09f;
+  margin: auto 1rem;
+  padding: 0 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  background-color: white;
+  transition: 0.2s;
+}
+
+.setting_button {
+  margin: 4vh auto 0 auto;
+  padding: 15px 30px;
+  text-align: center;
+  transition: 0.3s;
+  background-size: 200% auto;
+  color: white;
+  border-radius: 10px;
+  border: 0px;
+  font-weight: 700;
+  box-shadow: 0px 0px 14px -7px #000000;
+  background-image: linear-gradient(
+    45deg,
+    #2f44ff 0%,
+    #199af0 51%,
+    #442fff 100%
+  );
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.setting_button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.setting_button:active {
+  transform: scale(0.9);
+  transition: 0.1s;
+}
+
+.setting_error {
+  font-size: 0.9rem;
+  color: red;
+}
+
+@media screen and (max-width: 768px) {
+  .setting_container {
+    max-width: 90%;
+    padding: 2rem;
+    margin: 96px auto;
+  }
+
+  .setting_h1 {
+    font-size: 2.2em;
+  }
+
+  .setting_p {
+    font-size: 1rem;
+  }
+}

@@ -1,4 +1,4 @@
-.navchats_container {
+.userslist_container {
   background-color: white;
   height: 100vh;
   overflow-y: auto;
@@ -12,7 +12,7 @@
   z-index: 50;
 }
 
-.navchats_h2_container {
+.userslist_h2_container {
   padding: 0.7rem 0 0.7rem 1.5rem;
   background: linear-gradient(
     0deg,
@@ -21,38 +21,43 @@
   );
 }
 
-.navchats_h2 {
+.userslist_h2 {
   margin: 0;
 }
 
-.navchats_container_limited {
+.userslist_container_limited {
   /* background-color: aliceblue; */
   background-color: rgb(255, 255, 255);
   padding-bottom: 20px;
   height: 100%;
 }
 
-.navchats_chat_container {
+.userslist_user_container {
   position: relative;
   width: 100%;
   max-height: 93px;
   margin: 0;
   background-color: rgb(255, 255, 255);
   box-sizing: border-box;
-  transition: 0.3s;
   padding: 0.5rem 1.6rem 0.5rem 1rem;
   display: flex;
   align-items: center;
   overflow: hidden;
 }
 
-.navchats_chat_container:hover {
-  transform: scale(0.98);
-  background-color: aliceblue;
+.userslist_user_info_container:hover {
   cursor: pointer;
+  transform: translateX(10px);
 }
 
-.navchats_avatar {
+.userslist_user_info_container {
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.userslist_avatar {
   height: 4rem;
   width: 4rem;
   border-radius: 50%;
@@ -62,26 +67,57 @@
     rgba(0, 0, 0, 0.09) 0px 12px 8px;
 }
 
-.navchats_text_container {
-  margin: 0 auto 0 0;
-  padding: 0.1rem 1rem 0 1rem;
+.userslist_text_container {
+  padding: 0rem 1rem;
   overflow: hidden;
   height: 100%;
-  align-self: flex-start;
 }
 
-.navchats_name {
-  margin: 0;
-  padding: 0.5rem 0;
+.userslist_name {
   font-weight: 700;
+  font-size: 1.2rem;
 }
 
-.navchats_text {
-  max-width: 100%;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.userslist_button_container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0 auto;
+  padding-left: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.userslist_button {
+  margin-left: auto;
+  border: 0;
+  font-size: 1rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  width: 100px;
+  padding: 5px 10px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.15), 0 4px 4px rgba(0,0,0,0.15);
+  transition: 0.4s;
+}
+
+.userslist_button:hover {
+  cursor: pointer;
+}
+
+#userslist_button_add {
+  background: cyan;
+}
+
+#userslist_button_add:hover {
+  background: rgb(88, 219, 219);
+}
+
+#userslist_button_chat {
+  background: rgb(88, 209, 88);
+  margin-bottom: 10px;
+}
+
+#userslist_button_chat:hover {
+  background: rgb(90, 182, 90)
 }
 
 #toggleButton {
@@ -95,19 +131,19 @@
 }
 
 @media screen and (max-width: 768px) {
-  .navchats_container {
+  .userslist_container {
     width: 100%;
     z-index: 49;
     box-shadow: 5px 0 10px -5px #333;
   }
 
-  .navchats_chat_container:hover {
+  .userslist_chat_container:hover {
     transform: scale(1);
     background-color: rgb(255, 255, 255);
     cursor: default;
   }
 
-  .navchats_chat_container:active {
+  .userslist_chat_container:active {
     transform: scale(0.98);
     background-color: aliceblue;
     cursor: pointer;
