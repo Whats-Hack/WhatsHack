@@ -27,7 +27,7 @@ export default function UsersList({ currentUser, allUsers }) {
             return (
               <div key={index} className='userslist_user_container'>
                 <NavLink
-                  to={`/user/${user.id}`}
+                  to={`/users/${user.id}`}
                   key={index}
                   className='userslist_user_info_container'
                 >

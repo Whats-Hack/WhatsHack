@@ -80,7 +80,10 @@ function App() {
 
   // try to get all chats info
   useEffect(() => {
-    if (!currentUser.token) return;
+    if (!currentUser.token) {
+      setChatsDataDownloaded(true);
+      return;
+    }
 
     mainApi
       .getAllChatsInfo(currentUser.token)
@@ -95,7 +98,10 @@ function App() {
 
   // try to get all users info // not all info, just small one part
   useEffect(() => {
-    if (!currentUser.token) return;
+    if (!currentUser.token) {
+      setUsersDataDownloaded(true);
+      return;
+    }
 
     mainApi
       .getAllUsersInfo(currentUser.token)
@@ -167,7 +173,18 @@ function App() {
           />
 
           <Route
-            path='/userslist'
+            path='/users'
+            element={
+              <ProtectedRoute isActive={currentUser.token}>
+                <WhatsHack setCurrentUser={setCurrentUser}>
+                  <UsersList currentUser={currentUser} allUsers={allUsers} />
+                </WhatsHack>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/users/:userId'
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>

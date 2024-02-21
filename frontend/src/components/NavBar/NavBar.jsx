@@ -42,7 +42,7 @@ export default function NavBar({ setCurrentUser }) {
         </div>
       </Link>
 
-      <Link to={'/userslist'}>
+      <Link to={'/users'}>
         <div className='navbar_image_container'>
           <img className='navbar_image' src={addUserImg} alt='ChatImg' />
         </div>
