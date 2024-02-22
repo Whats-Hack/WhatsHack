@@ -13,12 +13,14 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
   return (
     <>
       <input type='checkbox' id='toggleButton' />
-      <label htmlFor='toggleButton' id='sideButton'>
-        <img src={arrowImg} alt='arrow-image' />
+
+      <label className='button' htmlFor='toggleButton' id='sideButton'>
+        <img src={arrowImg} alt='toggle icons' />
       </label>
+
       <div className='navchats_container' id='panel'>
         <div className='navchats_h2_container'>
-          <h2 className='navchats_h2'>Message</h2>
+          <h2 className='navchats_h2'>Chats</h2>
         </div>
         <div className='navchats_container_limited'>
           {allChats.map((chat, index) => {
@@ -80,7 +82,11 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
                 <div className='navchats_text_container'>
                   <p className='navchats_name'>{chatMater.username}</p>
                   <p className='navchats_text'>
-                    {_message ? _message.text : 'Write me'}
+                    {_message
+                      ? _message.isDeleted
+                        ? 'message was deleted'
+                        : _message.text
+                      : 'Write me'}
                   </p>
                 </div>
                 <p className='navchats_time'>

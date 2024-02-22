@@ -19,7 +19,7 @@ import Logo from './../Logo/Logo';
 
 // ? utils
 import { TIMER_REFRESH } from '../../utils/constants';
-import { isLink } from '../../utils/utils';
+import { isLink, isImageURL } from '../../utils/utils';
 
 export default function Discussion({
   downloadedChatsId,
@@ -232,12 +232,46 @@ export default function Discussion({
         <Logo />
 
         {allChats[currentChatIndex].messages.length > 0 &&
-          allChats[currentChatIndex].messages.map((message, index) => {
+          allChats[currentChatIndex].messages.map((message) => {
             const _isMessageOur = message.owner === currentUser.id;
+
+            if (message.isDeleted)
+              return (
+                <SystemMessage
+                  key={message.id}
+                  text={
+                    _isMessageOur
+                      ? 'You delete this message'
+                      : `Message was deleted by ${chatMater.username}`
+                  }
+                />
+              );
 
             const date = new Date(message.creationDate);
 
             const _isMessageLink = isLink(message.text);
+            const _isMessageLinkToImg =
+              _isMessageLink && isImageURL(message.text);
+
+            if (_isMessageLinkToImg)
+              return (
+                <MessageBox
+                  key={message.id}
+                  className='discussion_message_img'
+                  position={_isMessageOur ? 'right' : 'left'}
+                  type='photo'
+                  title={
+                    _isMessageOur ? currentUser.username : chatMater.username
+                  }
+                  removeButton={_isMessageOur}
+                  onRemoveMessageClick={(e) => {
+                    deleteMessage(e, message.id);
+                  }}
+                  data={{
+                    uri: message.text,
+                  }}
+                />
+              );
 
             const text = _isMessageLink ? (
               <a target='_blank' className='link' href={message.text}>
@@ -248,16 +282,10 @@ export default function Discussion({
             );
 
             return (
-              <div className='discussion_message' key={index}>
-                {message.isDeleted ? (
-                  <SystemMessage
-                    text={`Message was deleted by ${
-                      _isMessageOur ? currentUser.username : chatMater.username
-                    }`}
-                  />
-                ) : (
+              <div className='discussion_message' key={message.id}>
+                {
                   <MessageBox
-                    key={index}
+                    key={message.id}
                     title={
                       _isMessageOur ? currentUser.username : chatMater.username
                     }
@@ -278,7 +306,7 @@ export default function Discussion({
                     dateString={date.toLocaleString()}
                     date={date}
                   />
-                )}
+                }
               </div>
             );
           })}

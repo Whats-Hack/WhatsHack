@@ -1,15 +1,16 @@
 .logo {
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
   filter: blur(1px);
-  box-sizing: border-box;
+  --size: 256px;
+  width: var(--size);
+  height: var(--size);
   position: sticky;
-  margin-bottom: -100%;
+  margin: 0 auto calc(-1 * var(--size));
   display: flex;
   justify-content: center;
   align-items: center;
+
+  top: calc(50% - (var(--size) / 2));
+  left: calc(50% - (var(--size) / 2));
 }
 
 .logo_img {

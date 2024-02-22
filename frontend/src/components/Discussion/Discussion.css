@@ -27,19 +27,23 @@
 }
 
 .discussion_content {
-  padding: 2rem;
+  padding: 0.5rem 0.5rem calc(0.5rem + 55px);
   overflow-y: auto;
   background-color: rgb(245, 245, 245);
-  margin: 0 0 auto 0;
   position: relative;
   box-sizing: border-box;
   height: 100%;
-  padding-bottom: 85px;
 }
 
 .discussion_message {
   z-index: 2;
   position: relative;
+}
+
+.discussion_message_img img {
+  /* max-width: 16rem;
+  max-height: 12rem; */
+  object-fit: cover;
 }
 
 .discussion_input {

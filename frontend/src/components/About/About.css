@@ -34,20 +34,19 @@
   align-items: center;
   justify-content: center;
 
-  width: fit-content;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   background: radial-gradient(
     circle closest-side at center,
     rgba(2, 0, 36, 1) 5%,
     rgba(9, 9, 121, 1) 25%,
     rgba(0, 212, 255, 1) 35%,
-    transparent 75%,
-    transparent
+    transparent 95%
   );
 }
 
 .about_logo_img {
-  height: 80px;
+  height: 64px;
 }
 
 .about_h2 {
