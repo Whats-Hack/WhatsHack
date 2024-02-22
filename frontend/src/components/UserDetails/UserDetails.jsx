@@ -6,6 +6,21 @@ import defaultImg from './../../assets/default_avatar.png';
 
 import mainApi from '../../Api/main.api';
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export default function UserDetails({
   currentUser,
   allUsers,
@@ -34,20 +49,7 @@ export default function UserDetails({
     : "User don't set any birthday";
 
   let creationDate = new Date(userInfo.creationDate);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  
 
   //
   useEffect(() => {
@@ -95,6 +97,9 @@ export default function UserDetails({
         <div className='userdetails_img_content'>
           <img
             className='userdetails_img'
+            id={userInfo.avatar === '' || userInfo.avatar === null
+            ? 'userdetails_img_none'
+            : ''}
             src={
               userInfo.avatar === '' || userInfo.avatar === null
                 ? defaultImg
