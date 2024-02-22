@@ -186,7 +186,7 @@ export default function Discussion({
                 avatar={_isMessageOur ? currentUser.avatar : chatMater.avatar}
                 type={'text'}
                 position={_isMessageOur ? 'right' : 'left'}
-                text={message.text}
+                text={message.isDeleted ? 'Message was deleted' : message.text}
                 date={new Date(message.creationDate)}
               />
             );

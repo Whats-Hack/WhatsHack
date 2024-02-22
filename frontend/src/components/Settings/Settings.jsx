@@ -1,33 +1,68 @@
-// ? styles
-import './Settings.css';
-
+/* eslint-disable react/prop-types */
 // ! modules
 import { useState } from 'react';
 
-export default function Settings({ currentUser }) {
+// ? styles
+import './Settings.css';
 
+// ? api
+import mainApi from '../../Api/main.api';
+
+export default function Settings({ currentUser, setCurrentUser }) {
   const [errorMessage, setErrorMessage] = useState('');
 
-  
-  const [firstName, setFirstName] = useState(currentUser.firstName);
-  const [lastName, setLastName] = useState(currentUser.lastName);
-  const [email, setEmail] = useState(currentUser.email);
-  const [avatar, setAvatar] = useState(currentUser.avatar);
-  const [birthday, setBirthday] = useState(currentUser.birthday);
-  const [city, setCity] = useState(currentUser.city);
+  // form
+  const [firstName, setFirstName] = useState(isExist(currentUser.firstName));
+  const [lastName, setLastName] = useState(isExist(currentUser.lastName));
+  const [email, setEmail] = useState(isExist(currentUser.email));
+  const [avatar, setAvatar] = useState(isExist(currentUser.avatar));
+  const [birthday, setBirthday] = useState(isExist(currentUser.birthday));
+  const [city, setCity] = useState(isExist(currentUser.city));
+  // submit button
+  const [isSubmitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+
+  function isExist(value) {
+    return value !== null ? value : undefined;
+  }
 
   function handleSubmit(e) {
+    setSubmitButtonDisabled(true);
     e.preventDefault();
 
-    
+    const infoToModify = {
+      email: isExist(email),
+      avatar: isExist(avatar),
+      firstName: isExist(firstName),
+      lastName: isExist(lastName),
+      birthday: isExist(birthday),
+      city: isExist(city),
+    };
+
+    mainApi
+      .modifyUserInChatById(currentUser.token, infoToModify)
+      .then(() => {
+        setCurrentUser((preState) => {
+          return {
+            ...preState,
+            ...infoToModify,
+          };
+        });
+      })
+      .catch((errRes) => {
+        setErrorMessage(errRes.error);
+      })
+      .finally(() => {
+        setSubmitButtonDisabled(false);
+      });
   }
 
   return (
     <div className='setting_container'>
-      <h1 className='setting_h1'>Modify {currentUser.username} user settings</h1>
+      <h1 className='setting_h1'>
+        Modify {currentUser.username} user settings
+      </h1>
       <form className='setting_form' onSubmit={handleSubmit}>
         <div className='setting_form_inputs'>
-          
           <div className='setting_form_input'>
             <p>First Name: </p>
             <input
@@ -35,7 +70,10 @@ export default function Settings({ currentUser }) {
               type='text'
               name='firstName'
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setFirstName(e.target.value);
+              }}
             />
           </div>
           <div className='setting_form_input'>
@@ -45,7 +83,10 @@ export default function Settings({ currentUser }) {
               type='text'
               name='lastName'
               value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setLastName(e.target.value);
+              }}
             />
           </div>
           <div className='setting_form_input'>
@@ -55,7 +96,10 @@ export default function Settings({ currentUser }) {
               type='link'
               name='avatar'
               value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setAvatar(e.target.value);
+              }}
             />
           </div>
           <div className='setting_form_input'>
@@ -65,7 +109,10 @@ export default function Settings({ currentUser }) {
               type='email'
               name='email'
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setEmail(e.target.value);
+              }}
             />
           </div>
           <div className='setting_form_input'>
@@ -75,7 +122,10 @@ export default function Settings({ currentUser }) {
               type='date'
               name='birthday'
               value={birthday}
-              onChange={(e) => setBirthday(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setBirthday(e.target.value);
+              }}
             />
           </div>
           <div className='setting_form_input'>
@@ -85,12 +135,19 @@ export default function Settings({ currentUser }) {
               type='text'
               name='city'
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => {
+                setSubmitButtonDisabled(false);
+                setCity(e.target.value);
+              }}
             />
           </div>
         </div>
         <div>
-          <button className='setting_button' type='submit'>
+          <button
+            disabled={isSubmitButtonDisabled}
+            className='button setting_button'
+            type='submit'
+          >
             SUBMIT
           </button>
         </div>

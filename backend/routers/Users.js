@@ -22,4 +22,9 @@ routerUsers.get('/:userId', userController.getUserById);
 // add someone to your friend
 routerUsers.put('/:userId', userController.addOneUserToFriendsById);
 
+// ? PATCH
+
+// change information about user
+routerUsers.patch('/me', userController.modifyOneUserInfoByToken);
+
 module.exports = routerUsers;

@@ -215,7 +215,10 @@ function App() {
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
-                  <Settings currentUser={currentUser} />
+                  <Settings
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                  />
                 </WhatsHack>
               </ProtectedRoute>
             }

@@ -227,6 +227,23 @@
   }
   ```
 
+- domain/api/users/me _PATCH_
+
+  request
+
+  ```json
+  {
+    "email": "example@text.com",
+    "avatar": "url",
+    "firstName": "example firstName",
+    "lastName": "example lastName",
+    "birthday": "2000-01-01T00:00:00.000Z",
+    "city": "example city"
+  }
+  ```
+
+  no answer body
+
 ---
 
 ### chats

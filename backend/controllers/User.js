@@ -14,6 +14,7 @@ class UserController {
     this._findUserById = this._findUserById.bind(this);
     this.getUserByToken = this.getUserByToken.bind(this);
     this.addOneUserToFriendsById = this.addOneUserToFriendsById.bind(this);
+    this.modifyOneUserInfoByToken = this.modifyOneUserInfoByToken.bind(this);
   }
 
   /*** find user by id
@@ -182,6 +183,39 @@ class UserController {
     }
 
     _currentUser.data.friends.push(Number(userId));
+
+    this._saveDB();
+
+    res.send();
+  }
+
+  // ? PATCH
+  // add some user to your friends
+  modifyOneUserInfoByToken(req, res, next) {
+    // valid
+    if (!Object.keys(req.body)) {
+      res.status(400);
+      res.send({ error: 'Body of request can not be empty' });
+      return;
+    }
+
+    const { email, avatar, firstName, lastName, birthday, city } = req.body;
+
+    const _currentUser = this._findUserById(req.user.id);
+
+    // valid
+    if (!_currentUser) {
+      res.status(404);
+      res.send({ error: 'User not found' });
+      return;
+    }
+
+    _currentUser.data.email = email;
+    _currentUser.data.avatar = avatar;
+    _currentUser.data.firstName = firstName;
+    _currentUser.data.lastName = lastName;
+    _currentUser.data.birthday = birthday;
+    _currentUser.data.city = city;
 
     this._saveDB();
 

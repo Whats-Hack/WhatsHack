@@ -156,6 +156,30 @@ class MainApi {
     );
   }
 
+  /*** send message to chat by id
+   * @params newInfo: {
+   *    email: "example@text.com",
+   *    avatar: "url",
+   *    firstName: "example firstName",
+   *    lastName: "example lastName",
+   *    birthday: "2000-01-01T00:00:00.000Z", // type date
+   *    city: "example city"
+      }
+   */
+  modifyUserInChatById(token, newInfo) {
+    const _headers = this._headers;
+    _headers.authorization = token;
+    return this._request(
+      `${this._address}/users/me`,
+      {
+        method: 'PATCH',
+        headers: _headers,
+        body: JSON.stringify(newInfo),
+      },
+      'modify current user info',
+    );
+  }
+
   // ? GET
 
   /*** get user info
