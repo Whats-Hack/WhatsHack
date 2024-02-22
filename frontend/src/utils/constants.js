@@ -1,9 +1,9 @@
 // ! modules
 
 export const STATUS = {
-  SIMPLE: 'dev',
-  DEV: true,
-  PROD: false,
+  SIMPLE: 'prod',
+  DEV: false,
+  PROD: true,
 };
 
 export const API_SETTING = {
