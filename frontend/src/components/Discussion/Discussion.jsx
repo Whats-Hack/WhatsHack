@@ -12,6 +12,7 @@ import './react-chat-elements.css';
 import mainApi from '../../Api/main.api';
 
 // ? assets
+import logoIcon from './../../assets/whatshack.svg';
 import defaultIcon from './../../assets/default_avatar.png';
 
 // ? utils
@@ -191,7 +192,14 @@ export default function Discussion({
             );
           })
         ) : (
-          <p>Todo logotype</p>
+          <div className='discussion_empty_chat'>
+            <img
+              className='discussion_logo'
+              src={logoIcon}
+              alt='logotype of WhatsHack'
+            />
+            <div className='discussion_logo_shadow' />
+          </div>
         )}
       </div>
       <div className='discussion_input'>

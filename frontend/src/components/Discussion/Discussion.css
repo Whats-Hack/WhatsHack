@@ -1,58 +1,108 @@
 .discussion_container {
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    z-index: 0;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  z-index: 0;
 }
 
 .discussion_header {
-    width: 100%;
-    min-height: 32px;
-    text-align: center;
-    padding: 0.7rem 0;
-    background: linear-gradient(0deg, rgb(245, 245, 245) 0%, rgb(213, 236, 255) 30%, rgb(171, 216, 255) 100%);
+  width: 100%;
+  min-height: 32px;
+  text-align: center;
+  padding: 0.7rem 0;
+  background: linear-gradient(
+    0deg,
+    rgb(245, 245, 245) 0%,
+    rgb(213, 236, 255) 30%,
+    rgb(171, 216, 255) 100%
+  );
 }
 
 .discussion_h2 {
-    margin: 0;
+  margin: 0;
 }
 
 .discussion_content {
-    padding: 2rem;
-    overflow-y: auto;
-    background-color: rgb(245, 245, 245);
-    margin: 0 0 auto 0;
-    /* max-height: fit-content; */
-    height: 100%;
-    padding-bottom: 85px;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: rgb(245, 245, 245);
+  margin: 0 0 auto 0;
+  /* max-height: fit-content; */
+  height: 100%;
+  padding-bottom: 85px;
 }
 
 .discussion_input {
-    position: fixed;
-    display: flex;
-    bottom: 0;
-    width: 100%;
-    box-sizing: border-box;
-    height: 55px;
-    overflow-y: auto;
-    padding-left: 0.5rem;
-    box-shadow: 0px 12px 28px 0px rgba(140, 149, 159, 0.3);
-    border-top: 2px solid rgb(211, 211, 211);
-    background-color: rgb(255, 255, 255);
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 55px;
+  overflow-y: auto;
+  padding-left: 0.5rem;
+  box-shadow: 0px 12px 28px 0px rgba(140, 149, 159, 0.3);
+  border-top: 2px solid rgb(211, 211, 211);
+  background-color: rgb(255, 255, 255);
 }
 
+.discussion_empty_chat {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
 
+.discussion_logo {
+  z-index: 1;
+  width: 128px;
+  animation: scaleAnimation 5s linear infinite;
+}
+
+.discussion_logo_shadow {
+  --size: 256px;
+  width: var(--size);
+  height: var(--size);
+  z-index: 0;
+  position: absolute;
+  top: calc(50% - (var(--size) / 2));
+  left: calc(50% - (var(--size) / 2));
+
+  background: radial-gradient(
+    circle closest-side at center,
+    rgba(2, 0, 36, 1) 5%,
+    rgba(9, 9, 121, 1) 25%,
+    rgba(0, 212, 255, 1) 35%,
+    transparent 75%,
+    transparent
+  );
+
+  animation: scaleAnimation 5s linear infinite;
+}
+
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.85);
+  }
+}
 
 @media screen and (max-width: 768px) {
-    .discussion_container {
-        position: fixed;
-        top: 65px;
-        height: 93vh;
-        overflow-y: auto;
-        width: 100%;
-    }
+  .discussion_container {
+    position: fixed;
+    top: 65px;
+    height: 93vh;
+    overflow-y: auto;
+    width: 100%;
+  }
 }
