@@ -21,7 +21,7 @@ export default function UsersList({
   const navigate = useNavigate();
 
   function goToChat(id) {
-    navigate(`/chat/${id}`);
+    navigate(`/chats/${id}`);
   }
 
   function createChat(userId) {
@@ -69,7 +69,7 @@ export default function UsersList({
                 <Link
                   to={`/users/${user.id}`}
                   key={index}
-                  className='userslist_user_info_container'
+                  className='link userslist_user_info_container'
                 >
                   <img
                     className='userslist_avatar'
@@ -96,7 +96,14 @@ export default function UsersList({
                       alt='Chat logo'
                     />
                   </button>
-                  <button to={'/'} className='userslist_img_box'>
+                  <button
+                    onClick={
+                      chatId === undefined
+                        ? () => createChat(user.id)
+                        : () => goToChat(chatId)
+                    }
+                    className='userslist_img_box'
+                  >
                     <img
                       className='userslist_img'
                       src={addUser}

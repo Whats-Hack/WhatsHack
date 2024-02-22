@@ -65,7 +65,7 @@ class ChatController {
   getAllChats(req, res, next) {
     const user = { ...userController._findUserById(req.user.id) };
 
-    const chats = user.data.chats.map((chatId) => {
+    const chats = user.data.chats?.map((chatId) => {
       const _chat = { ...this._findChatById(chatId).data };
 
       const _message =
@@ -270,13 +270,6 @@ class ChatController {
       return;
     }
 
-    // valid
-    if (!req.body.message.trim()) {
-      res.status(400);
-      res.send({ error: "Message can't not be empty" });
-      return;
-    }
-
     const currentChat = this._findChatById(chatId);
 
     // check
@@ -307,10 +300,13 @@ class ChatController {
 
     currentChat.data.messages[currentMessage.index] = {
       id: currentMessage.data.id,
-      text: req.body.message.trim(),
+      text: req.body.message
+        ? req.body.message.trim()
+        : currentMessage.data.message,
       creationDate: currentMessage.data.creationDate,
       modifyDate: new Date(),
       owner: req.user.id,
+      isDeleted: req.body.isDeleted,
     };
 
     this._db.chats[currentChat.index] = currentChat.data;

@@ -13,6 +13,7 @@ import About from './components/About/About';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Discussion from './components/Discussion/Discussion';
+import Logo from './components/Logo/Logo';
 import NavChats from './components/NavChats/NavChats';
 import Settings from './components/Settings/Settings';
 import UsersList from './components/UsersList/UsersList';
@@ -143,6 +144,7 @@ function App() {
                     allChats={allChats}
                     allUsers={allUsers}
                   />
+                  <Logo />
                 </WhatsHack>
               </ProtectedRoute>
             }
@@ -182,6 +184,7 @@ function App() {
                     allChats={allChats}
                     setAllChats={setAllChats}
                   />
+                  <Logo />
                 </WhatsHack>
               </ProtectedRoute>
             }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // ! modules
-import { MessageBox, Input } from 'react-chat-elements';
-import { useParams } from 'react-router-dom';
+import { MessageBox, Input, SystemMessage } from 'react-chat-elements';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 
 // ? styles
@@ -12,11 +12,14 @@ import './react-chat-elements.css';
 import mainApi from '../../Api/main.api';
 
 // ? assets
-import logoIcon from './../../assets/whatshack.svg';
 import defaultIcon from './../../assets/default_avatar.png';
+
+// ? components
+import Logo from './../Logo/Logo';
 
 // ? utils
 import { TIMER_REFRESH } from '../../utils/constants';
+import { isLink } from '../../utils/utils';
 
 export default function Discussion({
   downloadedChatsId,
@@ -30,6 +33,8 @@ export default function Discussion({
   const { chatId } = useParams();
 
   const chatRef = useRef(null);
+
+  const navigate = useNavigate();
 
   // ? useStates
 
@@ -45,6 +50,7 @@ export default function Discussion({
   const [inputValue, setInputValue] = useState('');
 
   // ? function
+  // sent a new message
   function onSubmit() {
     if (!inputValue.trim()) return;
 
@@ -71,6 +77,41 @@ export default function Discussion({
       .catch((errRes) => {
         console.error(errRes);
         console.error(errRes.error);
+      });
+  }
+
+  // delete the message
+  function deleteMessage(e, messageId) {
+    e.preventDefault();
+
+    mainApi
+      .modifyMessageInChatById(currentUser.token, chatId, messageId, {
+        isDeleted: true,
+      })
+      .then(() => {
+        const _preStateAllChats = [...allChats];
+
+        for (let i = 0; i < _preStateAllChats.length; i++) {
+          const _chat = _preStateAllChats[i];
+          if (String(_chat.id) === String(chatId)) {
+            for (let j = 0; j < _chat.messages.length; j++) {
+              const _message = _chat.messages[j];
+
+              if (String(_message.id) === String(messageId)) {
+                _message.isDeleted = true;
+              }
+            }
+          }
+        }
+
+        setAllChats(_preStateAllChats);
+      })
+      .catch((errRes) => {
+        console.error(errRes);
+        console.error(errRes.error);
+      })
+      .finally(() => {
+        console.log('finally');
       });
   }
 
@@ -139,21 +180,36 @@ export default function Discussion({
     if (currentChatIndex === null) return;
 
     const _interval = setInterval(() => {
+      // mainApi
+      //   .getLastMessagesOfOneChatById(
+      //     currentUser.token,
+      //     allChats[currentChatIndex].id,
+      //     allChats[currentChatIndex].messages[
+      //       allChats[currentChatIndex].messages.length - 1
+      //     ].id,
+      //   )
+      //   .then((res) => {
+      //     const _preStateAllChats = [...allChats];
+
+      //     for (let i = 0; i < _preStateAllChats.length; i++) {
+      //       const _chat = _preStateAllChats[i];
+      //       if (String(_chat.id) === String(chatId)) {
+      //         _chat.messages = [..._chat.messages, ...res.data];
+      //       }
+      //     }
+
+      //     setAllChats(_preStateAllChats);
+      //   })
+      //   .catch((errRes) => console.error(errRes.error));
       mainApi
-        .getLastMessagesOfOneChatById(
-          currentUser.token,
-          allChats[currentChatIndex].id,
-          allChats[currentChatIndex].messages[
-            allChats[currentChatIndex].messages.length - 1
-          ].id,
-        )
+        .getOneChatInfoById(currentUser.token, chatId)
         .then((res) => {
           const _preStateAllChats = [...allChats];
 
           for (let i = 0; i < _preStateAllChats.length; i++) {
             const _chat = _preStateAllChats[i];
             if (String(_chat.id) === String(chatId)) {
-              _chat.messages = [..._chat.messages, ...res.data];
+              _chat.messages = res.data.messages;
             }
           }
 
@@ -165,7 +221,7 @@ export default function Discussion({
     return () => {
       clearInterval(_interval);
     };
-  }, []);
+  }, [currentChatIndex, chatId]);
 
   return currentChatIndex !== null ? (
     <div className='discussion_container'>
@@ -173,34 +229,59 @@ export default function Discussion({
         <h2 className='discussion_h2'>Discussion with {chatMater.username}</h2>
       </div>
       <div ref={chatRef} className='discussion_content'>
-        {allChats[currentChatIndex].messages.length > 0 ? (
+        <Logo />
+
+        {allChats[currentChatIndex].messages.length > 0 &&
           allChats[currentChatIndex].messages.map((message, index) => {
             const _isMessageOur = message.owner === currentUser.id;
 
-            return (
-              <MessageBox
-                key={index}
-                title={
-                  _isMessageOur ? currentUser.username : chatMater.username
-                }
-                avatar={_isMessageOur ? currentUser.avatar : chatMater.avatar}
-                type={'text'}
-                position={_isMessageOur ? 'right' : 'left'}
-                text={message.isDeleted ? 'Message was deleted' : message.text}
-                date={new Date(message.creationDate)}
-              />
+            const date = new Date(message.creationDate);
+
+            const _isMessageLink = isLink(message.text);
+
+            const text = _isMessageLink ? (
+              <a target='_blank' className='link' href={message.text}>
+                link
+              </a>
+            ) : (
+              message.text
             );
-          })
-        ) : (
-          <div className='discussion_empty_chat'>
-            <img
-              className='discussion_logo'
-              src={logoIcon}
-              alt='logotype of WhatsHack'
-            />
-            <div className='discussion_logo_shadow' />
-          </div>
-        )}
+
+            return (
+              <div className='discussion_message' key={index}>
+                {message.isDeleted ? (
+                  <SystemMessage
+                    text={`Message was deleted by ${
+                      _isMessageOur ? currentUser.username : chatMater.username
+                    }`}
+                  />
+                ) : (
+                  <MessageBox
+                    key={index}
+                    title={
+                      _isMessageOur ? currentUser.username : chatMater.username
+                    }
+                    onTitleClick={() => {
+                      navigate(`/users/${message.owner}`);
+                    }}
+                    avatar={
+                      _isMessageOur ? currentUser.avatar : chatMater.avatar
+                    }
+                    type={'text'}
+                    position={_isMessageOur ? 'right' : 'left'}
+                    text={text}
+                    removeButton={_isMessageOur}
+                    onRemoveMessageClick={(e) => {
+                      deleteMessage(e, message.id);
+                    }}
+                    id={message.id}
+                    dateString={date.toLocaleString()}
+                    date={date}
+                  />
+                )}
+              </div>
+            );
+          })}
       </div>
       <div className='discussion_input'>
         <Input

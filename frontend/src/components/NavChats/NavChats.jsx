@@ -68,9 +68,9 @@ export default function NavChats({ currentUser, allChats, allUsers }) {
 
             return (
               <Link
-                to={`/chat/${chat.id}`}
+                to={`/chats/${chat.id}`}
                 key={index}
-                className='navchats_chat_container'
+                className='link navchats_chat_container'
               >
                 <img
                   className='navchats_avatar'

@@ -41,25 +41,25 @@ export default function NavBar({ setCurrentUser }) {
 
       <div className='navbar_line' />
 
-      <NavLink to={'/chats'} className='navbar_image_container'>
+      <NavLink to={'/chats'} className='link navbar_image_container'>
         <div>
           <img className='navbar_image' src={chatImg} alt='ChatImg' />
         </div>
       </NavLink>
 
-      <NavLink to={'/users'} className='navbar_image_container'>
+      <NavLink to={'/users'} className='link navbar_image_container'>
         <div>
           <img className='navbar_image' src={addUserImg} alt='ChatImg' />
         </div>
       </NavLink>
 
-      <NavLink to={'/settings'} className='navbar_image_container'>
+      <NavLink to={'/settings'} className='link navbar_image_container'>
         <div>
           <img className='navbar_image' src={param} alt='ChatImg' />
         </div>
       </NavLink>
 
-      <NavLink to={'/about'} className='navbar_image_container'>
+      <NavLink to={'/about'} className='link navbar_image_container'>
         <div>
           <img className='navbar_image' src={about} alt='ChatImg' />
         </div>

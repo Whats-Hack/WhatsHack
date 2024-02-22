@@ -1,5 +1,7 @@
 /* button */
 @import url(./styles/button.css);
+/* link */
+@import url(./styles/link.css);
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -16,6 +18,7 @@
   min-height: 100vh;
   min-width: 100%;
   display: grid;
+  --fg-accent-color: #747bff;
 }
 
 body {
@@ -40,14 +43,4 @@ button {
   .navchats_container {
     height: 100%;
   }
-}
-
-a,
-a:link,
-a:visited,
-a:focus,
-a:hover,
-a:active {
-  color: inherit;
-  text-decoration: inherit;
 }

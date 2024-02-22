@@ -47,7 +47,6 @@ export default function Settings({ currentUser, setCurrentUser }) {
       })
       .finally(() => {
         setCurrentUser({ ...currentUser, ...infoToModify });
-        setSubmitButtonDisabled(false);
       });
   }
 
@@ -63,14 +62,12 @@ export default function Settings({ currentUser, setCurrentUser }) {
           <img
             className='setting_img'
             id={
-              isExist(currentUser.avatar) === '' ||
-              isExist(currentUser.avatar) === null
+              currentUser.avatar === '' || currentUser.avatar === null
                 ? 'setting_img_none'
                 : undefined
             }
             src={
-              isExist(currentUser.avatar) === '' ||
-              isExist(currentUser.avatar) === null
+              currentUser.avatar === '' || currentUser.avatar === null
                 ? defaultImg
                 : isExist(currentUser.avatar)
             }

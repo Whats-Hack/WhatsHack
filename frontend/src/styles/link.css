@@ -1,0 +1,16 @@
+.link {
+  text-decoration: none;
+  color: var(--fg-accent-color);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}

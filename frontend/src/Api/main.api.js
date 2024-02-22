@@ -7,7 +7,7 @@ class MainApi {
     this._headers = setting.headers;
   }
 
-  _checkResponse(res, url, message = '') {
+  async _checkResponse(res, url, message = '', json = true) {
     // check answer
     if (res.ok) {
       // print to console if development
@@ -18,7 +18,7 @@ class MainApi {
           } was successfully processed`,
         );
 
-      return res.json();
+      return json ? res.json() : await res;
     }
 
     //
@@ -40,9 +40,9 @@ class MainApi {
   }
 
   // request to server
-  async _request(url, options, message) {
+  async _request(url, options, message, json) {
     const res = await fetch(url, options);
-    return this._checkResponse(res, url, message);
+    return this._checkResponse(res, url, message, json);
   }
 
   // ? POST
@@ -140,9 +140,12 @@ class MainApi {
   // ? PATCH
 
   /*** send message to chat by id
-   * @params message: 'example password'
+   * @params newInfo: {
+   *    message: 'example message',
+   *    isDeleted: true,
+   *  }
    */
-  modifyMessageInChatById(token, chatId, messageId, message) {
+  modifyMessageInChatById(token, chatId, messageId, newInfo) {
     const _headers = this._headers;
     _headers.authorization = token;
     return this._request(
@@ -150,9 +153,10 @@ class MainApi {
       {
         method: 'PATCH',
         headers: _headers,
-        body: JSON.stringify({ message: message }),
+        body: JSON.stringify(newInfo),
       },
       'modify message in chat by id',
+      false,
     );
   }
 
@@ -166,7 +170,7 @@ class MainApi {
    *    city: "example city"
       }
    */
-  modifyUserInChatById(token, newInfo) {
+  modifyUserInfoById(token, newInfo) {
     const _headers = this._headers;
     _headers.authorization = token;
     return this._request(
