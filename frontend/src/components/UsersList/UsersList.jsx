@@ -9,7 +9,6 @@ import './UsersList.css';
 import arrowImg from './../../assets/arrow.png';
 import defaultIcon from './../../assets/default_avatar.png';
 import chatImg from './../../assets/chat.png';
-import addUser from './../../assets/add-user.png';
 import mainApi from '../../Api/main.api';
 
 export default function UsersList({
@@ -94,20 +93,6 @@ export default function UsersList({
                       className='userslist_img'
                       src={chatImg}
                       alt='Chat logo'
-                    />
-                  </button>
-                  <button
-                    onClick={
-                      chatId === undefined
-                        ? () => createChat(user.id)
-                        : () => goToChat(chatId)
-                    }
-                    className='userslist_img_box'
-                  >
-                    <img
-                      className='userslist_img'
-                      src={addUser}
-                      alt='Add user logo'
                     />
                   </button>
                 </div>
