@@ -8,6 +8,8 @@ import './Settings.css';
 // ? api
 import mainApi from '../../Api/main.api';
 
+import defaultImg from './../../assets/default_avatar.png';
+
 export default function Settings({ currentUser, setCurrentUser }) {
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -61,7 +63,23 @@ export default function Settings({ currentUser, setCurrentUser }) {
       <h1 className='setting_h1'>
         Modify {currentUser.username} user settings
       </h1>
+      
+      {/* <img src={avatar} alt="" /> */}
       <form className='setting_form' onSubmit={handleSubmit}>
+      <div className='setting_img_content'>
+          <img
+            className='setting_img'
+            id={isExist(currentUser.avatar) === '' || isExist(currentUser.avatar) === null
+            ? 'setting_img_none'
+            : ''}
+            src={
+              isExist(currentUser.avatar) === '' || isExist(currentUser.avatar) === null
+                ? defaultImg
+                : isExist(currentUser.avatar)
+            }
+            alt='Avatar picture'
+          />
+        </div>
         <div className='setting_form_inputs'>
           <div className='setting_form_input'>
             <p>First Name: </p>
