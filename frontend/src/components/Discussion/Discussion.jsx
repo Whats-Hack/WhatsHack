@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // ! modules
-import { MessageBox, Input, SystemMessage } from 'react-chat-elements';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Input, MessageList } from 'react-chat-elements';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 
 // ? styles
@@ -33,8 +33,6 @@ export default function Discussion({
   const { chatId } = useParams();
 
   const chatRef = useRef(null);
-
-  const navigate = useNavigate();
 
   // ? useStates
 
@@ -81,9 +79,7 @@ export default function Discussion({
   }
 
   // delete the message
-  function deleteMessage(e, messageId) {
-    e.preventDefault();
-
+  function deleteMessage(messageId) {
     mainApi
       .modifyMessageInChatById(currentUser.token, chatId, messageId, {
         isDeleted: true,
@@ -109,9 +105,6 @@ export default function Discussion({
       .catch((errRes) => {
         console.error(errRes);
         console.error(errRes.error);
-      })
-      .finally(() => {
-        console.log('finally');
       });
   }
 
@@ -231,85 +224,70 @@ export default function Discussion({
       <div ref={chatRef} className='discussion_content'>
         <Logo />
 
-        {allChats[currentChatIndex].messages.length > 0 &&
-          allChats[currentChatIndex].messages.map((message) => {
+        <MessageList
+          lockable={true}
+          onRemoveMessageClick={(message) => {
+            deleteMessage(message.id);
+          }}
+          dataSource={allChats[currentChatIndex].messages.map((message) => {
             const _isMessageOur = message.owner === currentUser.id;
-
-            if (message.isDeleted)
-              return (
-                <SystemMessage
-                  key={message.id}
-                  text={
-                    _isMessageOur
-                      ? 'You delete this message'
-                      : `Message was deleted by ${chatMater.username}`
-                  }
-                />
-              );
-
-            const date = new Date(message.creationDate);
-
             const _isMessageLink = isLink(message.text);
+
             const _isMessageLinkToImg =
               _isMessageLink && isImageURL(message.text);
+            const date = new Date(message.creationDate);
 
-            if (_isMessageLinkToImg)
-              return (
-                <MessageBox
-                  key={message.id}
-                  className='discussion_message_img'
-                  position={_isMessageOur ? 'right' : 'left'}
-                  type='photo'
-                  title={
-                    _isMessageOur ? currentUser.username : chatMater.username
-                  }
-                  removeButton={_isMessageOur}
-                  onRemoveMessageClick={(e) => {
-                    deleteMessage(e, message.id);
-                  }}
-                  data={{
-                    uri: message.text,
-                  }}
-                />
-              );
-
-            const text = _isMessageLink ? (
-              <a target='_blank' className='link' href={message.text}>
-                link
-              </a>
+            const text = message.isDeleted ? (
+              _isMessageOur ? (
+                'You delete this message'
+              ) : (
+                `Message was deleted by ${chatMater.username}`
+              )
+            ) : _isMessageLink ? (
+              _isMessageLinkToImg ? undefined : (
+                <a target='_blank' className='link' href={message.text}>
+                  link
+                </a>
+              )
             ) : (
               message.text
             );
 
-            return (
-              <div className='discussion_message' key={message.id}>
-                {
-                  <MessageBox
-                    key={message.id}
-                    title={
-                      _isMessageOur ? currentUser.username : chatMater.username
-                    }
-                    onTitleClick={() => {
-                      navigate(`/users/${message.owner}`);
-                    }}
-                    avatar={
-                      _isMessageOur ? currentUser.avatar : chatMater.avatar
-                    }
-                    type={'text'}
-                    position={_isMessageOur ? 'right' : 'left'}
-                    text={text}
-                    removeButton={_isMessageOur}
-                    onRemoveMessageClick={(e) => {
-                      deleteMessage(e, message.id);
-                    }}
-                    id={message.id}
-                    dateString={date.toLocaleString()}
-                    date={date}
-                  />
-                }
-              </div>
-            );
+            const status = 'sent';
+
+            const data = {
+              uri: null,
+            };
+
+            if (_isMessageLinkToImg) data.uri = message.text;
+
+            const type = message.isDeleted
+              ? 'system'
+              : _isMessageLinkToImg
+              ? 'photo'
+              : 'text';
+
+            return {
+              title: (
+                <Link className='link' to={`/users/${message.owner}`}>
+                  {_isMessageOur ? currentUser.username : chatMater.username}
+                </Link>
+              ),
+              data: data,
+              avatar: _isMessageOur ? currentUser.avatar : chatMater.avatar,
+              type: type,
+              position: _isMessageOur ? 'right' : 'left',
+              text: text,
+              removeButton: _isMessageOur,
+              id: message.id,
+              dateString: date.toLocaleString(),
+              date: date,
+              status: status,
+              statusTitle: 'some string',
+              notch: !_isMessageOur,
+            };
           })}
+        />
       </div>
       <div className='discussion_input'>
         <Input
