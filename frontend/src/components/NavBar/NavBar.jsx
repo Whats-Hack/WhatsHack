@@ -3,6 +3,7 @@
 import { NavLink } from 'react-router-dom';
 
 // ? assets
+import logoIcon from './../../assets/whatshack.svg';
 import chatImg from './../../assets/chat.png';
 import addUserImg from './../../assets/add-user.png';
 import about from './../../assets/about.png';
@@ -36,6 +37,10 @@ export default function NavBar({ setCurrentUser }) {
 
   return (
     <div className='navbar_container'>
+      <img className='navbar_logo' src={logoIcon} alt='Logotype of whatsHack' />
+
+      <div className='navbar_line' />
+
       <NavLink to={'/chat'} className='navbar_image_container'>
         <div>
           <img className='navbar_image' src={chatImg} alt='ChatImg' />

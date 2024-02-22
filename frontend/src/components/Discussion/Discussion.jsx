@@ -32,11 +32,8 @@ export default function Discussion({
 
   // ? useStates
 
-  const [currentChat, setCurrentChat] = useState({
-    id: null,
-    owners: [],
-    messages: [],
-  });
+  const [currentChatIndex, setCurrentChatIndex] = useState(null);
+
   const [chatMater, setChatMater] = useState({
     id: null,
     avatar: null,
@@ -64,10 +61,6 @@ export default function Discussion({
 
         setAllChats(_preStateAllChats);
 
-        const _preState = { ...currentChat };
-        _preState.messages.push(res.data);
-
-        setCurrentChat(_preState);
         setInputValue('');
 
         setTimeout(() => {
@@ -87,7 +80,7 @@ export default function Discussion({
     for (let i = 0; i < allChats.length; i++) {
       const _chat = allChats[i];
       if (String(_chat.id) === String(chatId)) {
-        setCurrentChat(_chat);
+        setCurrentChatIndex(i);
 
         if (!downloadedChatsId.includes(_chat.id)) {
           // download all messages if open chat first time
@@ -103,7 +96,7 @@ export default function Discussion({
                 }
                 return preState;
               });
-              setCurrentChat(res.data);
+
               setDownloadedChatsId((preState) => [...preState, _chat.id]);
             })
             .catch((errRes) => console.error(errRes.error))
@@ -121,9 +114,11 @@ export default function Discussion({
 
   // find a chatMater
   useEffect(() => {
-    if (typeof currentChat.id !== 'number') return;
+    if (currentChatIndex === null) return;
 
-    const _id = currentChat.owners.filter((item) => item !== currentUser.id)[0];
+    const _id = allChats[currentChatIndex].owners.filter(
+      (item) => item !== currentUser.id,
+    )[0];
 
     for (let i = 0; i < allUsers.length; i++) {
       const _user = allUsers[i];
@@ -136,18 +131,20 @@ export default function Discussion({
         break;
       }
     }
-  }, [allUsers, currentChat, currentUser.id]);
+  }, [allChats, allUsers, currentChatIndex, currentUser.id]);
 
   // check messages per tick
   useEffect(() => {
-    if (typeof currentChat.id !== 'number') return;
+    if (currentChatIndex === null) return;
 
     const _interval = setInterval(() => {
       mainApi
         .getLastMessagesOfOneChatById(
           currentUser.token,
-          currentChat.id,
-          currentChat.messages[currentChat.messages.length - 1].id,
+          allChats[currentChatIndex].id,
+          allChats[currentChatIndex].messages[
+            allChats[currentChatIndex].messages.length - 1
+          ].id,
         )
         .then((res) => {
           const _preStateAllChats = [...allChats];
@@ -160,11 +157,6 @@ export default function Discussion({
           }
 
           setAllChats(_preStateAllChats);
-
-          const _preState = { ...currentChat };
-          _preState.messages = [..._preState.messages, ...res.data];
-
-          setCurrentChat(_preState);
         })
         .catch((errRes) => console.error(errRes.error));
     }, TIMER_REFRESH.CHATS.ONE);
@@ -172,16 +164,16 @@ export default function Discussion({
     return () => {
       clearInterval(_interval);
     };
-  }, [currentChat]);
+  }, []);
 
-  return (
+  return currentChatIndex !== null ? (
     <div className='discussion_container'>
       <div className='discussion_header'>
         <h2 className='discussion_h2'>Discussion with {chatMater.username}</h2>
       </div>
       <div ref={chatRef} className='discussion_content'>
-        {currentChat.messages.length > 0 ? (
-          currentChat.messages.map((message, index) => {
+        {allChats[currentChatIndex].messages.length > 0 ? (
+          allChats[currentChatIndex].messages.map((message, index) => {
             const _isMessageOur = message.owner === currentUser.id;
 
             return (
@@ -215,5 +207,7 @@ export default function Discussion({
         />
       </div>
     </div>
+  ) : (
+    <p>Loading...</p>
   );
 }

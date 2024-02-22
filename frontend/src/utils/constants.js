@@ -15,7 +15,7 @@ export const API_SETTING = {
 
 export const TIMER_REFRESH = {
   CHATS: {
-    ONE: 1_000,
-    ALL: 2_000,
+    ONE: STATUS.DEV ? 1_000 : 2_500,
+    ALL: 5_000,
   },
 };

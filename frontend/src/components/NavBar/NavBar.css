@@ -27,6 +27,16 @@
   box-sizing: border-box;
 }
 
+.navbar_logo {
+  width: 40px;
+  height: 40px;
+}
+
+.navbar_line {
+  width: 100%;
+  border: 0.5px solid rgb(128, 196, 255);
+}
+
 .navbar_image_container:hover {
   background-color: rgb(255, 255, 255);
   transform: scale(1.1);
@@ -63,6 +73,15 @@
     max-width: 100%;
     min-height: fit-content;
     flex-direction: row;
+  }
+
+  .navbar_logo {
+    height: 45px;
+    width: 45px;
+  }
+
+  .navbar_line {
+    width: 0;
   }
 
   .navbar_image_container {
