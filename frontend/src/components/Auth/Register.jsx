@@ -45,7 +45,7 @@ export default function Register({ setCurrentUser }) {
           return { ...preState, ...{ token: res.token }, ...res.data };
         });
         localStorage.setItem('token', res.token);
-        navigate('/');
+        navigate('/users');
       })
       .catch((errRes) => {
         setErrorMessage(errRes.error);

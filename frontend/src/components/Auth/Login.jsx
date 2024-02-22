@@ -34,7 +34,7 @@ export default function Login({ setCurrentUser }) {
         });
         localStorage.setItem('token', res.token);
 
-        navigate('/');
+        navigate('/chats');
       })
       .catch((errRes) => {
         setErrorMessage(errRes.error);

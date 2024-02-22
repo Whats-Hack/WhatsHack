@@ -41,7 +41,7 @@ export default function NavBar({ setCurrentUser }) {
 
       <div className='navbar_line' />
 
-      <NavLink to={'/chat'} className='navbar_image_container'>
+      <NavLink to={'/chats'} className='navbar_image_container'>
         <div>
           <img className='navbar_image' src={chatImg} alt='ChatImg' />
         </div>

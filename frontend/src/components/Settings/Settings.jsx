@@ -41,19 +41,12 @@ export default function Settings({ currentUser, setCurrentUser }) {
     };
 
     mainApi
-      .modifyUserInChatById(currentUser.token, infoToModify)
-      .then(() => {
-        setCurrentUser((preState) => {
-          return {
-            ...preState,
-            ...infoToModify,
-          };
-        });
-      })
+      .modifyUserInfoById(currentUser.token, infoToModify)
       .catch((errRes) => {
         setErrorMessage(errRes.error);
       })
       .finally(() => {
+        setCurrentUser({ ...currentUser, ...infoToModify });
         setSubmitButtonDisabled(false);
       });
   }
@@ -63,17 +56,21 @@ export default function Settings({ currentUser, setCurrentUser }) {
       <h1 className='setting_h1'>
         Modify {currentUser.username} user settings
       </h1>
-      
+
       {/* <img src={avatar} alt="" /> */}
       <form className='setting_form' onSubmit={handleSubmit}>
-      <div className='setting_img_content'>
+        <div className='setting_img_content'>
           <img
             className='setting_img'
-            id={isExist(currentUser.avatar) === '' || isExist(currentUser.avatar) === null
-            ? 'setting_img_none'
-            : ''}
+            id={
+              isExist(currentUser.avatar) === '' ||
+              isExist(currentUser.avatar) === null
+                ? 'setting_img_none'
+                : undefined
+            }
             src={
-              isExist(currentUser.avatar) === '' || isExist(currentUser.avatar) === null
+              isExist(currentUser.avatar) === '' ||
+              isExist(currentUser.avatar) === null
                 ? defaultImg
                 : isExist(currentUser.avatar)
             }

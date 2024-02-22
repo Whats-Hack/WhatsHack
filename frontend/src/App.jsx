@@ -134,7 +134,7 @@ function App() {
           />
 
           <Route
-            path='/chat'
+            path='/chats'
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
@@ -149,7 +149,7 @@ function App() {
           />
 
           <Route
-            path='/chat/:chatId'
+            path='/chats/:chatId'
             element={
               <ProtectedRoute isActive={currentUser.token}>
                 <WhatsHack setCurrentUser={setCurrentUser}>
