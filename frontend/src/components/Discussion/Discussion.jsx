@@ -283,7 +283,6 @@ export default function Discussion({
               dateString: date.toLocaleString(),
               date: date,
               status: status,
-              statusTitle: 'some string',
               notch: !_isMessageOur,
             };
           })}
