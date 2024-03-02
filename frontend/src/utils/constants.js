@@ -1,9 +1,9 @@
 // ! modules
 
 export const STATUS = {
-  SIMPLE: 'prod',
-  DEV: false,
-  PROD: true,
+  SIMPLE: 'dev',
+  DEV: true,
+  PROD: false,
 };
 
 export const API_SETTING = {
@@ -11,6 +11,12 @@ export const API_SETTING = {
     ? 'http://localhost:5005/api'
     : 'https://whatshack.adaptable.app/api',
   contentType: 'application/json',
+};
+
+export const WEB_SOCKET_SETTING = {
+  URL: STATUS.DEV
+    ? 'ws://localhost:5005/websocket'
+    : 'ws://whatshack.adaptable.app/websocket',
 };
 
 export const TIMER_REFRESH = {

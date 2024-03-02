@@ -44,11 +44,20 @@ class Auth {
 
         ws.send(
           JSON.stringify({
+            type: 'auth',
+            action: 'login',
             statusCode: STATUS.INFO.OK,
             statusMessage: MESSAGE.INFO.LOGIN.SIMPLE,
             token: auth.createJwtToken(result),
+            data: result,
           }),
         );
+
+        this.sendInfoToUsersOnline({
+          type: 'auth',
+          action: 'login',
+          userId: result._id,
+        });
       })
       .catch((err) => {
         this.sendError(err);
@@ -66,8 +75,18 @@ class Auth {
       .then(async (result) => {
         this.updateConnectionsInfo(ws, result);
 
+        ws.send(
+          JSON.stringify({
+            type: 'auth',
+            action: 'loginByToken',
+            statusCode: STATUS.INFO.OK,
+            statusMessage: MESSAGE.INFO.LOGIN.SIMPLE,
+            data: result,
+          }),
+        );
+
         this.sendInfoToUsersOnline({
-          type: 'user',
+          type: 'auth',
           action: 'login',
           userId: result._id,
         });
@@ -99,6 +118,8 @@ class Auth {
           // send answer
           ws.send(
             JSON.stringify({
+              type: 'auth',
+              action: 'signup',
               statusCode: STATUS.INFO.CREATED,
               statusMessage: MESSAGE.INFO.CREATED.USER,
               data: result,
@@ -107,7 +128,7 @@ class Auth {
           );
 
           this.sendInfoToUsersOnline({
-            type: 'user',
+            type: 'auth',
             action: 'signup',
             userId: result._id,
           });

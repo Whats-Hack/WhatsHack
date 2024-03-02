@@ -1,3 +1,5 @@
+// main.js
+
 // ! modules
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';

@@ -1,3 +1,5 @@
+// App.js
+
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 // ! modules
@@ -20,7 +22,11 @@ import UsersList from './components/UsersList/UsersList';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserDetails from './components/UserDetails/UserDetails';
 
+//
 import mainApi from './Api/main.api';
+
+// ? utils
+import { WEB_SOCKET_SETTING } from './utils/constants';
 
 function App() {
   // ? useStates
@@ -32,18 +38,20 @@ function App() {
   const [isUsersDataDownloaded, setUsersDataDownloaded] = useState(false);
   //
   const [isAllInfoChecked, setAllInfoChecked] = useState(false);
+
+  // token
+  const [token, setToken] = useState(null);
+
   // all info about user
   const [currentUser, setCurrentUser] = useState({
-    token: null,
-    id: null, // number
+    _id: null, // number
     creationDate: null, // date
-    lastConnection: null, // date
+    lastConnectionDate: null, // date
     friends: [],
     chats: [],
     email: null,
     avatar: null, // url
     username: null,
-    password: null,
     firstName: null,
     lastName: null,
     birthday: null, // date
@@ -59,67 +67,157 @@ function App() {
   // downloaded users id
   const [downloadedUsersId, setDownloadedUsersId] = useState([]);
 
-  // ? useEffects
+  // ?
+  const [socket, setSocket] = useState();
+
+  useEffect(() => {
+    const _socket = new WebSocket(WEB_SOCKET_SETTING.URL);
+    setSocket(_socket);
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+
+    socket.send(
+      JSON.stringify({
+        type: 'auth',
+        action: 'loginByToken',
+        token: token,
+      }),
+    );
+  }, [token]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    // when open connection
+    socket.addEventListener('open', (event) => {
+      console.log('WebSocket connection opened');
+
+      // try to login by token
+      const token = localStorage.getItem('token');
+
+      if (!token) return;
+
+      setToken(token);
+    });
+
+    socket.addEventListener('message', handleWebSocketResponse);
+
+    socket.addEventListener('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+
+    socket.addEventListener('close', () => {
+      console.log('WebSocket connection closed');
+      socket.removeEventListener('message', handleWebSocketResponse);
+      setToken(null);
+    });
+  }, [socket]);
+
+  // connect to web-socket
+
+  // Слушатель для ответа от сервера
+  function handleWebSocketResponse(event) {
+    const answer = JSON.parse(event.data);
+    console.log('Response from server:', answer);
+
+    switch (answer.type) {
+      case 'auth':
+        switch (answer.action) {
+          case 'login':
+            break;
+
+          case 'loginByToken':
+            setCurrentUser({ ...currentUser, ...answer.data });
+            console.log(currentUser);
+            console.log(answer.data);
+            break;
+
+          case 'signup':
+            break;
+
+          default:
+            break;
+        }
+        break;
+
+      case 'info':
+        break;
+
+      case 'user':
+        break;
+
+      case 'chat':
+        break;
+
+      case 'message':
+        break;
+
+      default:
+        break;
+    }
+  }
 
   // try to check user info
-  useEffect(() => {
-    const _token = localStorage.getItem('token');
+  // useEffect(() => {
+  //   const _token = localStorage.getItem('token');
 
-    if (_token) {
-      mainApi
-        .getUserInfo(_token)
-        .then((res) => {
-          setCurrentUser((preState) => {
-            return { ...preState, ...{ token: _token }, ...res.data };
-          });
-        })
-        .catch((errRes) => console.error(errRes.error))
-        .finally(() => {
-          setTokenCheck(true);
-        });
-    } else {
-      setTokenCheck(true);
-      setChatsDataDownloaded(true);
-      setUsersDataDownloaded(true);
-    }
-  }, [isTokenCheck, currentUser.token]);
+  //   if (_token) {
+  //     mainApi
+  //       .getUserInfo(_token)
+  //       .then((res) => {
+  //         setCurrentUser((preState) => {
+  //           return { ...preState, ...{ token: _token }, ...res.data };
+  //         });
+  //       })
+  //       .catch((errRes) => console.error(errRes.error))
+  //       .finally(() => {
+  //         setTokenCheck(true);
+  //       });
+  //   } else {
+  //     setTokenCheck(true);
+  //     setChatsDataDownloaded(true);
+  //     setUsersDataDownloaded(true);
+  //   }
+  // }, [isTokenCheck, currentUser.token]);
 
   // try to get all chats info
-  useEffect(() => {
-    if (!currentUser.token) return;
+  // useEffect(() => {
+  //   if (!currentUser.token) return;
 
-    mainApi
-      .getAllChatsInfo(currentUser.token)
-      .then((res) => {
-        setAllChats(res.data);
-      })
-      .catch((errRes) => console.error(errRes.error))
-      .finally(() => {
-        setChatsDataDownloaded(true);
-      });
-  }, [isTokenCheck, currentUser.token]);
+  //   mainApi
+  //     .getAllChatsInfo(currentUser.token)
+  //     .then((res) => {
+  //       setAllChats(res.data);
+  //     })
+  //     .catch((errRes) => console.error(errRes.error))
+  //     .finally(() => {
+  //       setChatsDataDownloaded(true);
+  //     });
+  // }, [isTokenCheck, currentUser.token]);
 
   // try to get all users info // not all info, just small one part
-  useEffect(() => {
-    if (!currentUser.token) return;
+  // useEffect(() => {
+  //   if (!currentUser.token) return;
 
-    mainApi
-      .getAllUsersInfo(currentUser.token)
-      .then((res) => {
-        setAllUsers(res.data);
-      })
-      .catch((errRes) => console.error(errRes.error))
-      .finally(() => {
-        setUsersDataDownloaded(true);
-      });
-  }, [isTokenCheck, currentUser.token]);
+  //   mainApi
+  //     .getAllUsersInfo(currentUser.token)
+  //     .then((res) => {
+  //       setAllUsers(res.data);
+  //     })
+  //     .catch((errRes) => console.error(errRes.error))
+  //     .finally(() => {
+  //       setUsersDataDownloaded(true);
+  //     });
+  // }, [isTokenCheck, currentUser.token]);
 
   //
-  useEffect(() => {
-    setAllInfoChecked(
-      isUsersDataDownloaded && isChatsDataDownloaded && isTokenCheck,
-    );
-  }, [isUsersDataDownloaded, isChatsDataDownloaded, isTokenCheck]);
+  // useEffect(() => {
+  //   setAllInfoChecked(
+  //     isUsersDataDownloaded && isChatsDataDownloaded && isTokenCheck,
+  //   );
+  // }, [isUsersDataDownloaded, isChatsDataDownloaded, isTokenCheck]);
 
   return (
     <>
