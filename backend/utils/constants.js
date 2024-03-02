@@ -1,9 +1,7 @@
+// constants.js
+
 // ! modules
 require('dotenv').config();
-
-// * databases
-const usersDb = require('./../databases/users.db.json');
-const chatDb = require('./../databases/chats.db.json');
 
 const SERVER_SETTING = {
   PORT: process.env.PORT || 5005,
@@ -14,18 +12,24 @@ const MESSAGE = {
   ERROR: {
     BAD_REQUEST: {
       SIMPLE: 'Bad request',
+      CHAT: {
+        USER_EMPTY: 'There must be at least one user',
+      },
     },
     INCORRECT_DATA: {
       SIMPLE: 'Incorrect data entered',
     },
     FORBIDDEN: {
       SIMPLE: 'You are not allowed to do this operation',
+      CHAT: 'You have no access to this chat',
+      MESSAGE: 'You have no access to this message',
     },
     NOT_FOUND: {
       SIMPLE: 'Not found',
       USER: 'User not found',
-      USERS: 'No user found',
+      USERS: 'Not all users found',
       ROUTER: 'Router not found',
+      CHAT: 'Chat not found',
     },
     NOT_AUTHORIZED: {
       SIMPLE: 'User is not authorized',
@@ -39,17 +43,30 @@ const MESSAGE = {
     DUPLICATE: {
       SIMPLE: 'You can not use these parameters, try other ones',
       USER: 'There is already a user with this username',
+      CHAT: 'Chat already exist',
     },
     VALIDATION: {
       SIMPLE: 'Validation error',
       EMAIL: 'Email validation error',
       URL: 'URL validation error',
+      ID: 'Invalid id',
+      MESSAGE: {
+        TYPE: 'Invalid type of message',
+        VALUE: 'Value must be existed',
+        STATUS: 'Invalid status of message',
+      },
     },
   },
   INFO: {
+    GET: {
+      SIMPLE: 'Here info',
+      USER: 'Here user info',
+      CHAT: 'Here chat info',
+    },
     CREATED: {
       SIMPLE: 'Created',
       USER: 'User has been created',
+      CHAT: 'Chat has been created',
       MESSAGE: 'Messages has been sended',
     },
     POST: {
@@ -69,6 +86,15 @@ const MESSAGE = {
     LOGOUT: { SIMPLE: 'You have successfully logged out' },
     LOGIN: { SIMPLE: 'You have successfully logged in' },
   },
+  SYSTEM: {
+    CHAT: {
+      SIMPLE: '',
+    },
+    MESSAGE: {
+      SIMPLE: '',
+      DELETE: (msg = 'user') => `Message was delete by ${msg}`,
+    },
+  },
 };
 
 const STATUS = {
@@ -87,14 +113,8 @@ const STATUS = {
   },
 };
 
-const DB = {
-  USERS: usersDb,
-  CHATS: chatDb,
-};
-
 module.exports = {
   SERVER_SETTING,
   MESSAGE,
   STATUS,
-  DB,
 };
