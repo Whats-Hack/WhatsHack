@@ -16,15 +16,12 @@ const { SERVER_SETTING } = require('./utils/constants');
 const server = express();
 
 // CORS
-server.use(cors({
-  origin: "https://whatshack.netlify.app"
-}));
-// server.use(
-//   cors({
-//     origin: '*',
-//     optionsSuccessStatus: 200,
-//   }),
-// );
+server.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus: 200,
+  }),
+);
 
 // to have access to body in request "parsing json"
 server.use(express.json());
@@ -32,10 +29,10 @@ server.use(express.json());
 server.use(morgan('dev'));
 
 // Middleware to disable CORS
-// server.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   next();
-// });
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // ? routers
 server.use(router);
