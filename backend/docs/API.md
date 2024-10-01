@@ -5,7 +5,7 @@
 - read this
 
 ```
-  production domain - https://whatshack.adaptable.app/
+  production domain - https://whats-hack.adaptable.app/
   development domain - http://localhost:PORT/
   PORT - check in .env
 ```
